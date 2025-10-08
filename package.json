@@ -1,0 +1,10 @@
+{
+  "name": "rpa-site",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "2.x",
+    "nanoid": "5.x",
+    "raw-body": "2.x",
+    "stripe": "15.x"
+  }
+}
