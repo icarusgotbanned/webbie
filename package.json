@@ -5,6 +5,7 @@
     "@supabase/supabase-js": "2.x",
     "nanoid": "5.x",
     "raw-body": "2.x",
+        "micro": "^9.4.1",
     "stripe": "15.x"
   }
 }
