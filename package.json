@@ -1,5 +1,6 @@
 {
   "name": "rpa-site",
+    "type": "module",
   "private": true,
   "dependencies": {
     "@supabase/supabase-js": "2.x",
