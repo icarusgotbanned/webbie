@@ -1,25 +1,20 @@
-// api/_db.js (Supabase, hardened)
+// api/_db.js
 import { createClient } from "@supabase/supabase-js";
 import crypto from "crypto";
 
-function requireEnv(name) {
+function need(name) {
   const v = process.env[name];
   if (!v) {
-    throw new Error(
-      `Missing required env ${name}. Set it in Vercel → Project → Settings → Environment Variables and redeploy.`
-    );
+    throw new Error(`Missing required env ${name}. Add it in Vercel → Settings → Environment Variables and redeploy.`);
   }
   return v;
 }
 
-// IMPORTANT: these must be set in Vercel envs (server-side) and you must redeploy after setting them
-const SUPABASE_URL = requireEnv("SUPABASE_URL");
-const SUPABASE_SERVICE_ROLE = requireEnv("SUPABASE_SERVICE_ROLE");
+const SUPABASE_URL = need("SUPABASE_URL");
+const SUPABASE_SERVICE_ROLE = need("SUPABASE_SERVICE_ROLE");
 
-// Ensure we are NOT on edge runtime (Stripe/Supabase need Node crypto & raw body)
-if (!process.versions?.node) {
-  throw new Error("This API route must run on the Node.js runtime (not Edge).");
-}
+// Ensure Node runtime (not Edge), needed for crypto & Stripe signature validation in sibling routes
+if (!process.versions?.node) throw new Error("Must run on Node.js runtime, not Edge.");
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE, {
   auth: { persistSession: false },
@@ -35,7 +30,6 @@ export function newApiKey() {
 }
 
 export async function upsertUser({ id, email }) {
-  // requires users(id primary key) exist
   const { error } = await supabase.from("users").upsert({ id, email }, { onConflict: "id" });
   if (error) throw error;
 }
