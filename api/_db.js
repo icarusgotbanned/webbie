@@ -1,12 +1,29 @@
-// api/_db.js (Supabase)
+// api/_db.js (Supabase, hardened)
 import { createClient } from "@supabase/supabase-js";
 import crypto from "crypto";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE, // server-only
-  { auth: { persistSession: false } }
-);
+function requireEnv(name) {
+  const v = process.env[name];
+  if (!v) {
+    throw new Error(
+      `Missing required env ${name}. Set it in Vercel → Project → Settings → Environment Variables and redeploy.`
+    );
+  }
+  return v;
+}
+
+// IMPORTANT: these must be set in Vercel envs (server-side) and you must redeploy after setting them
+const SUPABASE_URL = requireEnv("SUPABASE_URL");
+const SUPABASE_SERVICE_ROLE = requireEnv("SUPABASE_SERVICE_ROLE");
+
+// Ensure we are NOT on edge runtime (Stripe/Supabase need Node crypto & raw body)
+if (!process.versions?.node) {
+  throw new Error("This API route must run on the Node.js runtime (not Edge).");
+}
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE, {
+  auth: { persistSession: false },
+});
 
 export function hashKey(plaintext) {
   return crypto.createHash("sha256").update(plaintext).digest("hex");
@@ -18,10 +35,8 @@ export function newApiKey() {
 }
 
 export async function upsertUser({ id, email }) {
-  // id = your user identifier (we’re using email unless you wire real auth)
-  const { error } = await supabase
-    .from("users")
-    .upsert({ id, email }, { onConflict: "id" });
+  // requires users(id primary key) exist
+  const { error } = await supabase.from("users").upsert({ id, email }, { onConflict: "id" });
   if (error) throw error;
 }
 
@@ -32,11 +47,9 @@ export async function upsertSubscription({ userId, stripeSubId, status, currentP
     stripe_sub_id: stripeSubId,
     status,
     current_period_end: currentPeriodEnd,
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   };
-  const { error } = await supabase
-    .from("subscriptions")
-    .upsert(payload, { onConflict: "id" });
+  const { error } = await supabase.from("subscriptions").upsert(payload, { onConflict: "id" });
   if (error) throw error;
 }
 
@@ -45,7 +58,7 @@ export async function hasActiveSub(userId) {
     .from("subscriptions")
     .select("id")
     .eq("user_id", userId)
-    .in("status", ["active","trialing"])
+    .in("status", ["active", "trialing"])
     .limit(1);
   if (error) throw error;
   return (data?.length ?? 0) > 0;
@@ -81,5 +94,3 @@ export async function findKeyByHash(hash) {
   if (error) throw error;
   return data || null;
 }
-
-export { supabase };
