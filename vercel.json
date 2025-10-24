@@ -1,6 +1,14 @@
 {
-  "rewrites": [
-    { "source": "/api/:match*", "destination": "/api/:match*" },
-    { "source": "/((?!api|.*\\..*).*)", "destination": "/index.html" }
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+
+    // serve real static files as-is
+    { "src": "/(.*)\\.(html|css|js|png|jpg|svg|ico|txt|json)", "dest": "/$1.$2" },
+
+    // SPA-style fallback: only extensionless paths go to index.html
+    { "src": "^/(?!api/).*$", "dest": "/index.html" }
   ]
 }
