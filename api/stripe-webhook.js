@@ -1,7 +1,7 @@
 // api/stripe-webhook.js
 import Stripe from "stripe";
 import { buffer as microBuffer } from "micro";
-import { upsertSubscription } from "./_db.js";
+import { upsertSubscription, upsertUser } from "./_db.js";
 
 export const config = { api: { bodyParser: false } };
 export const runtime = "nodejs";
@@ -46,6 +46,8 @@ export default async function handler(req, res) {
           const customer = await stripe.customers.retrieve(customerId);
           const email = customer.email || customer?.metadata?.userId;
           if (email) {
+            // Ensure we have a local user record for this email
+            try { await upsertUser({ id: email, email }); } catch {}
             await upsertSubscription({
               userId: email,
               stripeSubId: sub.id,
@@ -64,6 +66,8 @@ export default async function handler(req, res) {
         const customer = await stripe.customers.retrieve(sub.customer);
         const email = customer.email || customer?.metadata?.userId;
         if (email) {
+          // Ensure user exists locally
+          try { await upsertUser({ id: email, email }); } catch {}
           await upsertSubscription({
             userId: email,
             stripeSubId: sub.id,
