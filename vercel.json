@@ -4,11 +4,7 @@
   "trailingSlash": false,
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
-
-
-    { "src": "/(.*)\\.(html|css|js|png|jpg|svg|ico|txt|json)", "dest": "/$1.$2" },
-
-
-    { "src": "^/(?!api/).*$", "dest": "/index.html" }
+    { "src": "/(.*)\\.(html|css|js|png|jpg|svg|ico|txt|json|map)", "dest": "/$1.$2" },
+    { "src": "^/(?!api/)(?!.*\\..*$).*$", "dest": "/index.html" }
   ]
 }
