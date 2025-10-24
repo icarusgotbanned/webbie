@@ -4,7 +4,6 @@ import { buffer as microBuffer } from "micro";
 import { upsertSubscription, upsertUser } from "./_db.js";
 
 export const config = { api: { bodyParser: false } };
-export const runtime = "nodejs";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", { apiVersion: "2024-06-20" });
 
