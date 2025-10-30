@@ -1,6 +1,6 @@
 // api/validate.js
 import crypto from "crypto";
-import { findKeyByHash, hasActiveSub } from "./_db.js";
+import { findKeyByHash, hasActiveSub } from "../_db.js";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
