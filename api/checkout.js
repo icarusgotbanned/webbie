@@ -1,6 +1,7 @@
 // api/checkout.js
 import Stripe from "stripe";
-import { upsertUser } from "./_db.js";
+
+export const runtime = "nodejs";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", { apiVersion: "2024-06-20" });
 
