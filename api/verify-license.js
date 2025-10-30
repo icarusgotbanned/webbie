@@ -1,6 +1,6 @@
-const supa = require("./_supabase");
+import supa from "./_supabase.js";
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end("Method Not Allowed");
 
   let body = "";
@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   });
 
   let parsed = {};
-  try { parsed = JSON.parse(body || "{}"); } catch { /* ignore */ }
+  try { parsed = JSON.parse(body || "{}"); } catch {}
 
   const { license_key } = parsed;
   if (!license_key) return res.status(400).send("missing license_key");
@@ -24,4 +24,4 @@ module.exports = async (req, res) => {
   if (!data) return res.status(404).send("invalid");
   const active = data.status === "active" || data.status === "trialing";
   res.status(200).json({ active });
-};
+}

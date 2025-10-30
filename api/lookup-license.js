@@ -1,6 +1,6 @@
-const supa = require("./_supabase");
+import supa from "./_supabase.js";
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).end("Method Not Allowed");
 
   const { session_id } = req.query || {};
@@ -14,4 +14,4 @@ module.exports = async (req, res) => {
 
   if (error) return res.status(400).send(error.message);
   res.status(200).json({ license_key: data?.license_key || null });
-};
+}

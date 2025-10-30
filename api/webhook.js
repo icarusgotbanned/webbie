@@ -1,9 +1,9 @@
-const stripe = require("./_stripe");
-const getRawBody = require("raw-body");
-const supa = require("./_supabase");
-const { makeLicense } = require("./_license");
+import stripe from "./_stripe.js";
+import getRawBody from "raw-body";
+import supa from "./_supabase.js";
+import { makeLicense } from "./_license.js";
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end("Method Not Allowed");
 
   const sig = req.headers["stripe-signature"];
@@ -38,9 +38,11 @@ module.exports = async (req, res) => {
           .eq("subscription_id", sub.id);
         break;
       }
+      default:
+        break;
     }
     res.status(200).send("ok");
   } catch (e) {
     res.status(400).send(e.message);
   }
-};
+}

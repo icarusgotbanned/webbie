@@ -1,6 +1,7 @@
-const { customAlphabet } = require("nanoid");
+import { customAlphabet } from "nanoid";
+
 const nanoid = customAlphabet("ABCDEFGHJKLMNPQRSTUVWXYZ23456789", 24);
-function makeLicense() {
+
+export function makeLicense() {
   return nanoid().match(/.{1,4}/g).join("-");
 }
-module.exports = { makeLicense };
