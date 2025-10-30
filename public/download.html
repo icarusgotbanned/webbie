@@ -25,8 +25,8 @@
     </div>
     <h1>Your download should start automatically</h1>
     <div class="card" style="margin:14px 0">
-      <p class="muted">If it doesn't, <a id="direct" class="btn" href="#">Click here to download</a>.</p>
-      <p class="muted">Works on Windows 10/11 (x64).</p>
+      <p class="muted">Version <span id="v">—</span>. If it doesn't, <a id="direct" class="btn" href="#">Click here to download</a>.</p>
+      <p class="muted">Works on Windows 10/11 (x64). <span id="sum"></span></p>
     </div>
     <a class="btn" href="/">Back to site</a>
   </div>
@@ -50,10 +50,14 @@
 
     const data = await firstJson(candidates);
     const link = document.getElementById("direct");
+    const ver = document.getElementById("v");
+    const sum = document.getElementById("sum");
 
     let exeUrl = null;
     if (data) {
       exeUrl = data?.windows?.url || data?.url || null;
+      if (data?.latest_version) ver.textContent = data.latest_version;
+      if (data?.windows?.sha256) sum.textContent = `SHA256: ${data.windows.sha256}`;
     }
 
     if(!exeUrl){

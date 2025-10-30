@@ -60,7 +60,7 @@
       <h1 class="title">Automate your desktop with AI — securely on your PC.</h1>
       <p class="sub">Absolute Assistant opens apps (Discord, Steam, Office…), visits sites, fills forms, and types like a human. Keep your data local while you work faster.</p>
       <div class="cta">
-        <a class="btn" href="/download.html">Download for Windows</a>
+        <a class="btn" id="dl" href="/download.html">Download for Windows</a>
         <a class="btn ghost" href="/subscribe.html">Subscribe</a>
         <a class="btn ghost" href="#features">See features</a>
       </div>
@@ -110,6 +110,21 @@
     </footer>
   </div>
 
-  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+    // Enhance Download CTA with latest version label from manifest (if reachable)
+    (async () => {
+      try{
+        const r = await fetch('/absolute-assistant/updates/win-x64.json', { cache: 'no-store' });
+        if(!r.ok) return;
+        const d = await r.json();
+        const ver = d?.latest_version || d?.windows?.version;
+        if(ver){
+          const dl = document.getElementById('dl');
+          dl.textContent = `Download for Windows · v${ver}`;
+        }
+      }catch{}
+    })();
+  </script>
 </body>
 </html>
