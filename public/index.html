@@ -43,6 +43,14 @@
     .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:999px;padding:6px 10px;background:rgba(255,255,255,.04);font-size:13px}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
     .ctaBar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:rgba(125,211,252,.07);border:1px solid rgba(125,211,252,.25);padding:16px;border-radius:12px}
+    .pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+    .priceCard{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03));border:1px solid var(--bd);border-radius:14px;padding:18px}
+    .price{font-size:34px;font-weight:900}
+    .ul{margin:10px 0 0;padding:0 0 0 18px}
+    .quoteGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+    .quote{background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:12px;padding:16px}
+    .faq details{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:10px;padding:12px}
+    .faq details+details{margin-top:10px}
     .foot{margin-top:36px;color:var(--muted);font-size:13px;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:center}
     .kicker{display:inline-block;font-size:12px;color:var(--ok);background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);padding:4px 8px;border-radius:999px;margin-bottom:10px}
     .divider{height:1px;background:var(--bd);margin:26px 0}
@@ -108,6 +116,62 @@
       </article>
     </section>
 
+    <section class="section" id="pricing">
+      <h2 style="margin:0 0 12px">Pricing</h2>
+      <div class="pricing">
+        <div class="priceCard">
+          <div class="badge">Most Popular</div>
+          <div class="price">$9<span style="font-size:14px;font-weight:600">/mo</span></div>
+          <ul class="ul">
+            <li>All features, unlimited flows</li>
+            <li>Local-first — keep your data on-device</li>
+            <li>Priority email support</li>
+          </ul>
+          <div style="margin-top:14px;display:flex;gap:10px;align-items:center">
+            <a class="btn" href="/subscribe.html">Start subscription</a>
+            <small class="muted">7‑day money‑back guarantee</small>
+          </div>
+        </div>
+        <div class="priceCard">
+          <div class="badge">Free Trial</div>
+          <div class="price">$0</div>
+          <ul class="ul">
+            <li>Try core features</li>
+            <li>No credit card required</li>
+            <li>One device</li>
+          </ul>
+          <div style="margin-top:14px">
+            <a class="btn ghost" href="/download.html">Download and try</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="testimonials">
+      <h2 style="margin:0 0 12px">What users say</h2>
+      <div class="quoteGrid">
+        <blockquote class="quote">“I automated my morning login steps in minutes. Huge time saver.”</blockquote>
+        <blockquote class="quote">“Typing looks human, sites don’t flag it. Finally a desktop bot that feels natural.”</blockquote>
+        <blockquote class="quote">“Local-first is the win — no data leaves my machine.”</blockquote>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
+      <h2 style="margin:0 0 12px">FAQ</h2>
+      <details>
+        <summary>Does it work offline?</summary>
+        <div style="margin-top:8px" class="muted">Yes. Core automation runs locally. Some cloud connectors are optional.</div>
+      </details>
+      <details>
+        <summary>Can I cancel anytime?</summary>
+        <div style="margin-top:8px" class="muted">Yes. Subscriptions are month‑to‑month; cancel from the email link or contact support.</div>
+      </details>
+      <details>
+        <summary>How is my license verified?</summary>
+        <div style="margin-top:8px" class="muted">At launch, the app validates your key via <code>/api/verify-license</code>. Keys can be rotated anytime.</div>
+      </details>
+    </section>
+
     <section class="section">
       <div class="grid">
         <div class="step">
@@ -162,6 +226,8 @@
         if(ver){
           const dl = document.getElementById('dl');
           dl.textContent = `Download for Windows · v${ver}`;
+          const dl2 = document.getElementById('dl2');
+          if (dl2) dl2.textContent = `Download for Windows · v${ver}`;
         }
       }catch{}
     })();
