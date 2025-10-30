@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/", "destination": "/index.html" },
     { "source": "/(cancel|success|download|subscribe)", "destination": "/$1.html" },
     { "source": "/((?!api|.*\\..*).*)", "destination": "/index.html" }
   ]
