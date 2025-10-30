@@ -2,9 +2,10 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)\\.(html|css|js|png|jpg|svg|ico|txt|json|map)", "dest": "/$1.$2" },
-    { "src": "^/(?!api/)(?!.*\\..*$).*$", "dest": "/index.html" }
+  "rewrites": [
+    {
+      "source": "/((?!api|.*\\..*).*)",
+      "destination": "/index.html"
+    }
   ]
 }
