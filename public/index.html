@@ -5,232 +5,573 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Absolute Assistant — Local AI Desktop RPA</title>
   <meta name="description" content="Absolute Assistant: open apps, type like a human, and automate the web — locally on your PC." />
-  <meta property="og:title" content="Absolute Assistant" />
-  <meta property="og:description" content="Open apps, type like a human, and automate the web — locally on your PC." />
-  <meta name="theme-color" content="#0b1220" />
+  <meta name="theme-color" content="#0a0e1a" />
   <style>
-    :root{
-      --bg:#0b1220;--panel:#111a2b;--text:#e8eef8;--muted:#aab7cf;
-      --ok:#34d399;--a1:#7dd3fc;--a2:#34d399;--bd:rgba(255,255,255,.08)
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      margin:0;
+      background:#0a0e1a;
+      color:#e8eef8;
+      font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
     }
-    *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,rgba(125,211,252,.15),transparent),radial-gradient(1000px 500px at 110% 10%,rgba(52,211,153,.12),transparent),var(--bg);color:var(--text);font-family:system-ui,Segoe UI,Roboto,Arial}
-    a{color:inherit}
-    .wrap{max-width:1160px;margin:0 auto;padding:48px 20px}
-    .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px}
-    .logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--a1),var(--a2))}
-    .brand span{font-size:18px}
-    .nav a{opacity:.9;text-decoration:none;margin-left:16px}
-    .hero{padding:36px 0 12px}
-    .title{font-size:42px;line-height:1.1;margin:0 0 10px;
-      font-weight:900;background:linear-gradient(90deg,var(--a1),var(--a2));
-      -webkit-background-clip:text;background-clip:text;color:transparent}
-    .sub{opacity:.85;margin:0 0 20px}
-    .cta{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 8px}
-    .btn{background:linear-gradient(90deg,var(--a1),var(--a2));color:#0b1220;border:none;
-      padding:12px 16px;border-radius:12px;font-weight:800;text-decoration:none;cursor:pointer}
-    .ghost{background:transparent;color:var(--text);border:1px solid var(--bd)}
-    .panel{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-    .card{background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:16px}
-    .card b{display:block;margin-bottom:6px}
-    .stripe{margin-top:24px;background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:12px;padding:16px}
-    .stripe small{color:var(--muted)}
-    .section{margin-top:36px}
-    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-    .step{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid var(--bd);border-radius:12px;padding:16px}
-    .step h3{margin:0 0 6px;font-size:16px}
-    .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:999px;padding:6px 10px;background:rgba(255,255,255,.04);font-size:13px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-    .ctaBar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:rgba(125,211,252,.07);border:1px solid rgba(125,211,252,.25);padding:16px;border-radius:12px}
-    .pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-    .priceCard{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03));border:1px solid var(--bd);border-radius:14px;padding:18px}
-    .price{font-size:34px;font-weight:900}
-    .ul{margin:10px 0 0;padding:0 0 0 18px}
-    .quoteGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-    .quote{background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:12px;padding:16px}
-    .faq details{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:10px;padding:12px}
-    .faq details+details{margin-top:10px}
-    .foot{margin-top:36px;color:var(--muted);font-size:13px;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:center}
-    .kicker{display:inline-block;font-size:12px;color:var(--ok);background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);padding:4px 8px;border-radius:999px;margin-bottom:10px}
-    .divider{height:1px;background:var(--bd);margin:26px 0}
-    @media (max-width:480px){.title{font-size:34px}}
+    .header{
+      border-bottom:1px solid rgba(255,255,255,.05);
+      background:rgba(13,17,23,.8);
+      backdrop-filter:blur(8px);
+      position:sticky;
+      top:0;
+      z-index:50;
+      padding:12px 24px;
+    }
+    .header-inner{
+      max-width:1400px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo{
+      width:28px;
+      height:28px;
+      border-radius:6px;
+      background:linear-gradient(135deg,#3b82f6,#10b981);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:900;
+      font-size:12px;
+    }
+    .brand-text{
+      font-weight:700;
+      font-size:16px;
+    }
+    .nav{
+      display:flex;
+      gap:24px;
+      font-size:14px;
+    }
+    .nav a{
+      color:#60a5fa;
+      text-decoration:none;
+      transition:color .2s;
+    }
+    .nav a:first-child{color:#60a5fa}
+    .nav a:not(:first-child){color:#94a3b8}
+    .nav a:hover{color:#93c5fd}
+    .main-container{
+      display:flex;
+      flex:1;
+      min-height:calc(100vh - 60px);
+    }
+    .sidebar{
+      width:256px;
+      border-right:1px solid rgba(255,255,255,.05);
+      background:#0a0e1a;
+      padding:16px;
+    }
+    .new-chat-btn{
+      width:100%;
+      padding:10px 16px;
+      border-radius:8px;
+      background:#2563eb;
+      color:white;
+      font-weight:600;
+      font-size:14px;
+      border:none;
+      cursor:pointer;
+      transition:background .2s;
+      margin-bottom:16px;
+    }
+    .new-chat-btn:hover{background:#1d4ed8}
+    .chat-item{
+      padding:12px;
+      border-radius:8px;
+      background:rgba(37,99,235,.2);
+      border:1px solid rgba(59,130,246,.3);
+      cursor:pointer;
+      margin-bottom:4px;
+    }
+    .chat-item-title{
+      font-size:14px;
+      font-weight:500;
+      color:#e2e8f0;
+      margin-bottom:2px;
+    }
+    .chat-item-time{
+      font-size:12px;
+      color:#94a3b8;
+      margin-top:2px;
+    }
+    .content-area{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      background:#0a0e1a;
+    }
+    .chat-header{
+      border-bottom:1px solid rgba(255,255,255,.05);
+      background:rgba(13,17,23,.5);
+      padding:12px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .license-status{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      color:#cbd5e1;
+    }
+    .license-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#10b981;
+    }
+    .auto-execute{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      color:#cbd5e1;
+    }
+    .chat-main{
+      flex:1;
+      padding:24px;
+      overflow-y:auto;
+      background:#0a0e1a;
+    }
+    .chat-inner{
+      max-width:1200px;
+      margin:0 auto;
+    }
+    .hero-section{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:32px;
+      align-items:start;
+      margin-bottom:64px;
+    }
+    .hero-left h1{
+      font-size:48px;
+      font-weight:900;
+      margin-bottom:16px;
+      background:linear-gradient(90deg,#60a5fa,#10b981);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      line-height:1.1;
+    }
+    .hero-left p{
+      font-size:20px;
+      color:#cbd5e1;
+      margin-bottom:24px;
+    }
+    .feature-list{
+      list-style:none;
+      margin:24px 0;
+    }
+    .feature-list li{
+      display:flex;
+      align-items:start;
+      gap:12px;
+      color:#cbd5e1;
+      margin-bottom:12px;
+    }
+    .feature-list li::before{
+      content:'✓';
+      color:#10b981;
+      font-weight:bold;
+      margin-top:2px;
+    }
+    .cta-btn{
+      padding:14px 32px;
+      border-radius:12px;
+      background:linear-gradient(90deg,#2563eb,#10b981);
+      color:white;
+      font-weight:700;
+      font-size:16px;
+      border:none;
+      cursor:pointer;
+      transition:opacity .2s;
+      box-shadow:0 4px 14px rgba(37,99,235,.2);
+    }
+    .cta-btn:hover{opacity:.9}
+    .cta-btn:disabled{opacity:.5;cursor:not-allowed}
+    .chat-examples{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .chat-bubble{
+      display:flex;
+      gap:12px;
+    }
+    .chat-avatar{
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      flex-shrink:0;
+    }
+    .chat-avatar.user{background:#475569}
+    .chat-avatar.assistant{background:linear-gradient(135deg,#3b82f6,#10b981)}
+    .chat-message{
+      flex:1;
+      background:#161b22;
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:16px;
+      border-top-left-radius:4px;
+      padding:12px 16px;
+      font-size:14px;
+      color:#e2e8f0;
+    }
+    .section{
+      margin-top:64px;
+      padding-top:64px;
+    }
+    .section h2{
+      font-size:32px;
+      font-weight:900;
+      margin-bottom:24px;
+      color:#f1f5f9;
+    }
+    .features-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:16px;
+    }
+    .feature-card{
+      background:#161b22;
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:12px;
+      padding:20px;
+    }
+    .feature-card h3{
+      font-weight:700;
+      margin-bottom:8px;
+      color:#e2e8f0;
+    }
+    .feature-card p{
+      font-size:14px;
+      color:#94a3b8;
+    }
+    .pricing-card{
+      max-width:400px;
+      margin:0 auto;
+      background:#161b22;
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:16px;
+      padding:32px;
+    }
+    .pricing-price{
+      font-size:36px;
+      font-weight:900;
+      color:#f1f5f9;
+      margin-bottom:16px;
+    }
+    .pricing-price span{
+      font-size:18px;
+      font-weight:600;
+      color:#94a3b8;
+    }
+    .pricing-features{
+      list-style:none;
+      margin:16px 0 24px;
+    }
+    .pricing-features li{
+      color:#cbd5e1;
+      font-size:14px;
+      margin-bottom:8px;
+      padding-left:20px;
+      position:relative;
+    }
+    .pricing-features li::before{
+      content:'•';
+      position:absolute;
+      left:0;
+      color:#94a3b8;
+    }
+    .faq-item{
+      background:#161b22;
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:12px;
+      padding:16px;
+      margin-bottom:12px;
+    }
+    .faq-item summary{
+      font-weight:600;
+      color:#e2e8f0;
+      cursor:pointer;
+    }
+    .faq-item p{
+      margin-top:8px;
+      font-size:14px;
+      color:#94a3b8;
+    }
+    .input-bar{
+      border-top:1px solid rgba(255,255,255,.05);
+      background:rgba(13,17,23,.5);
+      padding:16px 24px;
+    }
+    .input-inner{
+      max-width:1200px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .mic-btn{
+      width:40px;
+      height:40px;
+      border-radius:8px;
+      background:#161b22;
+      border:1px solid rgba(255,255,255,.05);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#94a3b8;
+      cursor:pointer;
+      transition:color .2s;
+    }
+    .mic-btn:hover{color:#cbd5e1}
+    .input-field{
+      flex:1;
+      border-radius:12px;
+      background:#161b22;
+      border:1px solid rgba(255,255,255,.05);
+      padding:10px 16px;
+      font-size:14px;
+      color:#94a3b8;
+      outline:none;
+    }
+    .send-btn{
+      padding:10px 16px;
+      border-radius:12px;
+      background:#2563eb;
+      color:white;
+      font-weight:600;
+      font-size:14px;
+      border:none;
+      cursor:pointer;
+      transition:background .2s;
+    }
+    .send-btn:hover{background:#1d4ed8}
+    .footer{
+      border-top:1px solid rgba(255,255,255,.05);
+      background:#0a0e1a;
+      padding:24px;
+      text-align:center;
+      font-size:14px;
+      color:#94a3b8;
+    }
+    .footer a{
+      color:#94a3b8;
+      text-decoration:none;
+      margin:0 12px;
+    }
+    .footer a:hover{color:#cbd5e1}
+    @media (max-width:768px){
+      .hero-section{grid-template-columns:1fr}
+      .sidebar{display:none}
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="nav">
+  <header class="header">
+    <div class="header-inner">
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <span>Absolute Assistant</span>
+        <div class="logo">AA</div>
+        <div class="brand-text">Absolute Assistant — trev9</div>
       </div>
-      <div>
-        <a href="#features">Features</a>
-        <a href="mailto:support@yourdomain.com">Support</a>
-      </div>
+      <nav class="nav">
+        <a href="#features">Chat</a>
+        <a href="#pricing">Settings</a>
+        <a href="#faq">Developer</a>
+      </nav>
     </div>
+  </header>
 
-    <header class="hero">
-      <span class="kicker">Local-first • Windows</span>
-      <h1 class="title">Automate your desktop with AI — securely on your PC.</h1>
-      <p class="sub">Absolute Assistant opens apps (Discord, Steam, Office…), visits sites, fills forms, and types like a human. Keep your data local while you work faster.</p>
-      <div class="cta">
-        <a class="btn" id="dl" href="/download.html">Download for Windows</a>
-        <a class="btn ghost" href="/subscribe.html">Subscribe</a>
-        <a class="btn ghost" href="#features">See features</a>
+  <div class="main-container">
+    <aside class="sidebar">
+      <button class="new-chat-btn">+ New Chat</button>
+      <div class="chat-item">
+        <div class="chat-item-title">New chat</div>
+        <div class="chat-item-time">6:43 PM</div>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <div class="chat-header">
+        <div class="license-status">
+          <div class="license-dot"></div>
+          <span>License: valid</span>
+        </div>
+        <label class="auto-execute">
+          <input type="checkbox" checked style="margin-right:8px" />
+          <span>Auto-execute</span>
+        </label>
       </div>
 
-      <div class="stripe">
-        <b>License & Billing</b>
-        <p>Subscribe with Stripe to receive a license key instantly on the success page. Your desktop app verifies the key via our <code>/api/verify-license</code> endpoint.</p>
-        <small>No card? Use Stripe’s test mode while you integrate.</small>
-      </div>
-    </header>
-
-    <div id="features" class="divider"></div>
-
-    <section class="panel" aria-label="Key features">
-      <article class="card">
-        <b>Open & Control Apps</b>
-        Discord, Steam, EA, Epic Games, Office, Notepad, Calculator, browsers, and more.
-      </article>
-      <article class="card">
-        <b>Human-like Typing</b>
-        Natural keystroke pacing and paste fallback for long text blocks.
-      </article>
-      <article class="card">
-        <b>Web Automation</b>
-        Navigate, log in, and fill forms; supports local indexing for fast search.
-      </article>
-      <article class="card">
-        <b>Local-first</b>
-        Your automations run on your machine. Use your own API keys, keep your data local.
-      </article>
-      <article class="card">
-        <b>Simple Licensing</b>
-        Instant Stripe checkout → license stored server-side → verified by the app.
-      </article>
-      <article class="card">
-        <b>Fast Support</b>
-        Email us any time: <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>
-      </article>
-    </section>
-
-    <section class="section" id="pricing">
-      <h2 style="margin:0 0 12px">Pricing</h2>
-      <div class="pricing">
-        <div class="priceCard">
-          <div class="badge">Most Popular</div>
-          <div class="price">$9<span style="font-size:14px;font-weight:600">/mo</span></div>
-          <ul class="ul">
-            <li>All features, unlimited flows</li>
-            <li>Local-first — keep your data on-device</li>
-            <li>Priority email support</li>
-          </ul>
-          <div style="margin-top:14px;display:flex;gap:10px;align-items:center">
-            <a class="btn" href="/subscribe.html">Start subscription</a>
-            <small class="muted">7‑day money‑back guarantee</small>
+      <div class="chat-main">
+        <div class="chat-inner">
+          <div class="hero-section">
+            <div class="hero-left">
+              <h1>Absolute Assistant</h1>
+              <p>Your local AI that clicks, types and automates your desktop for you.</p>
+              <ul class="feature-list">
+                <li>Voice wake-word ("Hey Assistant") + dictation</li>
+                <li>Gmail / email drafting automation</li>
+                <li>Script-like workflows without coding</li>
+                <li>Runs locally, connects to AI in the cloud</li>
+              </ul>
+              <button class="cta-btn" id="checkout-btn">Get Absolute Assistant</button>
+            </div>
+            <div class="chat-examples">
+              <div class="chat-bubble">
+                <div class="chat-avatar user"></div>
+                <div class="chat-message">Hey Assistant, open Discord, Steam and my email, then summarize my inbox.</div>
+              </div>
+              <div class="chat-bubble">
+                <div class="chat-avatar assistant"></div>
+                <div class="chat-message">Done. I've opened your apps and drafted summaries for your last 5 emails.</div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="priceCard">
-          <div class="badge">Free Trial</div>
-          <div class="price">$0</div>
-          <ul class="ul">
-            <li>Try core features</li>
-            <li>No credit card required</li>
-            <li>One device</li>
-          </ul>
-          <div style="margin-top:14px">
-            <a class="btn ghost" href="/download.html">Download and try</a>
-          </div>
+
+          <section class="section" id="features">
+            <h2>Features</h2>
+            <div class="features-grid">
+              <div class="feature-card">
+                <h3>Open & Control Apps</h3>
+                <p>Discord, Steam, EA, Epic Games, Office, Notepad, Calculator, browsers, and more.</p>
+              </div>
+              <div class="feature-card">
+                <h3>Human-like Typing</h3>
+                <p>Natural keystroke pacing and paste fallback for long text blocks.</p>
+              </div>
+              <div class="feature-card">
+                <h3>Web Automation</h3>
+                <p>Navigate, log in, and fill forms; supports local indexing for fast search.</p>
+              </div>
+              <div class="feature-card">
+                <h3>Local-first</h3>
+                <p>Your automations run on your machine. Use your own API keys, keep your data local.</p>
+              </div>
+              <div class="feature-card">
+                <h3>Voice Control</h3>
+                <p>Wake word detection and voice commands for hands-free automation.</p>
+              </div>
+              <div class="feature-card">
+                <h3>Fast Support</h3>
+                <p>Email us any time: <a href="mailto:support@yourdomain.com" style="color:#60a5fa">support@yourdomain.com</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="pricing">
+            <h2>Pricing</h2>
+            <div class="pricing-card">
+              <div class="pricing-price">$9<span>/mo</span></div>
+              <ul class="pricing-features">
+                <li>All features, unlimited flows</li>
+                <li>Local-first — keep your data on-device</li>
+                <li>Priority email support</li>
+                <li>Voice wake-word & dictation</li>
+                <li>Auto-execute workflows</li>
+              </ul>
+              <button class="cta-btn" id="checkout-btn-2" style="width:100%">Get Absolute Assistant</button>
+              <p style="text-align:center;font-size:12px;color:#94a3b8;margin-top:16px">7-day money-back guarantee</p>
+            </div>
+          </section>
+
+          <section class="section" id="faq">
+            <h2>FAQ</h2>
+            <details class="faq-item">
+              <summary>Does it work offline?</summary>
+              <p>Yes. Core automation runs locally. Some cloud connectors are optional.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Can I turn off the mic?</summary>
+              <p>Yes. Voice wake-word and dictation can be disabled in settings. All features work without voice.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Can I cancel anytime?</summary>
+              <p>Yes. Subscriptions are month-to-month; cancel from the email link or contact support.</p>
+            </details>
+            <details class="faq-item">
+              <summary>How is my license verified?</summary>
+              <p>At launch, the app validates your key via our secure API. Keys can be rotated anytime.</p>
+            </details>
+          </section>
         </div>
       </div>
-    </section>
 
-    <section class="section" id="testimonials">
-      <h2 style="margin:0 0 12px">What users say</h2>
-      <div class="quoteGrid">
-        <blockquote class="quote">“I automated my morning login steps in minutes. Huge time saver.”</blockquote>
-        <blockquote class="quote">“Typing looks human, sites don’t flag it. Finally a desktop bot that feels natural.”</blockquote>
-        <blockquote class="quote">“Local-first is the win — no data leaves my machine.”</blockquote>
-      </div>
-    </section>
-
-    <section class="section faq" id="faq">
-      <h2 style="margin:0 0 12px">FAQ</h2>
-      <details>
-        <summary>Does it work offline?</summary>
-        <div style="margin-top:8px" class="muted">Yes. Core automation runs locally. Some cloud connectors are optional.</div>
-      </details>
-      <details>
-        <summary>Can I cancel anytime?</summary>
-        <div style="margin-top:8px" class="muted">Yes. Subscriptions are month‑to‑month; cancel from the email link or contact support.</div>
-      </details>
-      <details>
-        <summary>How is my license verified?</summary>
-        <div style="margin-top:8px" class="muted">At launch, the app validates your key via <code>/api/verify-license</code>. Keys can be rotated anytime.</div>
-      </details>
-    </section>
-
-    <section class="section">
-      <div class="grid">
-        <div class="step">
-          <div class="badge">1 · Download</div>
-          <h3>Install the desktop app</h3>
-          <div>Grab the Windows installer and sign in with your email.</div>
-        </div>
-        <div class="step">
-          <div class="badge">2 · Subscribe</div>
-          <h3>Activate your license</h3>
-          <div>Subscribe and receive a license key automatically via email.</div>
-        </div>
-        <div class="step">
-          <div class="badge">3 · Automate</div>
-          <h3>Run flows locally</h3>
-          <div>Open apps, type, and control the web securely on your PC.</div>
+      <div class="input-bar">
+        <div class="input-inner">
+          <button class="mic-btn">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+            </svg>
+          </button>
+          <input type="text" class="input-field" placeholder="Ask or command anything…" readonly />
+          <button class="send-btn">Send</button>
         </div>
       </div>
-    </section>
-
-    <section class="section">
-      <div class="ctaBar">
-        <div>
-          <div style="font-weight:800">Ready to get started?</div>
-          <small class="muted">Windows 10/11 x64 · Local-first · Keep your data on-device</small>
-        </div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <a class="btn" id="dl2" href="/download.html">Download for Windows</a>
-          <a class="btn ghost" href="/subscribe.html">Subscribe</a>
-        </div>
-      </div>
-    </section>
-
-    <footer class="foot">
-      <div>© <span id="y"></span> Absolute Assistant</div>
-      <div style="display:flex;gap:12px;">
-        <a href="/terms.html">Terms</a>
-        <a href="/privacy.html">Privacy</a>
-      </div>
-    </footer>
+    </main>
   </div>
 
+  <footer class="footer">
+    <div>© <span id="year"></span> Absolute Assistant</div>
+    <div style="margin-top:8px">
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+    </div>
+  </footer>
+
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-    // Enhance Download CTA with latest version label from manifest (if reachable)
-    (async () => {
-      try{
-        const r = await fetch('/absolute-assistant/updates/win-x64.json', { cache: 'no-store' });
-        if(!r.ok) return;
-        const d = await r.json();
-        const ver = d?.latest_version || d?.windows?.version;
-        if(ver){
-          const dl = document.getElementById('dl');
-          dl.textContent = `Download for Windows · v${ver}`;
-          const dl2 = document.getElementById('dl2');
-          if (dl2) dl2.textContent = `Download for Windows · v${ver}`;
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    async function handleCheckout() {
+      const btn1 = document.getElementById('checkout-btn');
+      const btn2 = document.getElementById('checkout-btn-2');
+      [btn1, btn2].forEach(btn => {
+        btn.disabled = true;
+        btn.textContent = 'Loading...';
+      });
+      
+      try {
+        const res = await fetch('/api/checkout', { method: 'POST' });
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Error: ' + (data.error || 'Unable to create checkout session'));
+          [btn1, btn2].forEach(btn => {
+            btn.disabled = false;
+            btn.textContent = 'Get Absolute Assistant';
+          });
         }
-      }catch{}
-    })();
+      } catch (err) {
+        alert('Error creating checkout session');
+        [btn1, btn2].forEach(btn => {
+          btn.disabled = false;
+          btn.textContent = 'Get Absolute Assistant';
+        });
+      }
+    }
+    
+    document.getElementById('checkout-btn').addEventListener('click', handleCheckout);
+    document.getElementById('checkout-btn-2').addEventListener('click', handleCheckout);
   </script>
 </body>
 </html>
