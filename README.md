@@ -47,3 +47,4 @@ The download installer should be hosted at:
 
 Update the URL in `app/download/page.tsx` if your installer is hosted elsewhere.
 
+

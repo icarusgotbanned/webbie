@@ -55,3 +55,4 @@ If you see errors about large files:
 3. Check .gitattributes exists and is correct
 4. Re-add the file: `git rm --cached public/downloads/AbsoluteAssistantSetup.exe && git add public/downloads/AbsoluteAssistantSetup.exe`
 
+

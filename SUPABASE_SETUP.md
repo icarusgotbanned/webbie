@@ -71,3 +71,4 @@ To test the Supabase connection:
 - Verify the webhook is receiving events from Stripe
 - Check Supabase logs for insert errors
 
+

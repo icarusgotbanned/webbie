@@ -92,18 +92,33 @@ export default async function handler(req, res) {
             }
 
             try {
+              const appUrl = process.env.APP_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://www.lancelot.world';
+              const downloadUrl = `${appUrl}/download?session_id=${session.id}`;
+              
+              const emailHtml = `
+                <div style="font-family:system-ui,Segoe UI,Roboto,Arial;max-width:600px;margin:0 auto;padding:20px">
+                  <h2 style="color:#1f2937;margin-bottom:20px">Thanks for your purchase!</h2>
+                  <p style="color:#4b5563;line-height:1.6">Here is your Absolute Assistant license key:</p>
+                  <div style="font-family:ui-monospace,Consolas,Menlo,monospace;font-size:18px;background:#f3f4f6;padding:16px;border-radius:8px;text-align:center;margin:20px 0;border:2px solid #e5e7eb">
+                    <strong style="color:#059669">${license}</strong>
+                  </div>
+                  <p style="color:#4b5563;line-height:1.6">Enter this key in the Absolute Assistant app to activate your license.</p>
+                  <p style="color:#4b5563;line-height:1.6;margin-top:20px">
+                    You can also retrieve it from the download page: 
+                    <a href="${downloadUrl}" style="color:#2563eb;text-decoration:underline">View License Key</a>
+                  </p>
+                  <hr style="border:none;border-top:1px solid #e5e7eb;margin:30px 0" />
+                  <p style="color:#6b7280;font-size:12px">Keep this license key secure. Do not share it with others.</p>
+                </div>
+              `;
+
               await sendEmail({
                 to: email,
                 subject: "Your Absolute Assistant license key",
-                html: `
-                  <div style="font-family:system-ui,Segoe UI,Roboto,Arial">
-                    <p>Thanks for your purchase! Here is your license key:</p>
-                    <p style="font-family:ui-monospace,Consolas,Menlo,monospace;font-size:16px;background:#f3f4f6;padding:12px;border-radius:8px;text-align:center"><b>${license}</b></p>
-                    <p>Enter this key in the Absolute Assistant app to activate your license.</p>
-                    <p>You can also retrieve it from the download page: <a href="${process.env.APP_URL || 'https://www.lancelot.world'}/download?session_id=${session.id}">View License Key</a></p>
-                  </div>
-                `,
+                html: emailHtml,
               });
+              
+              console.log("[WH] License key email sent to:", email);
             } catch (e) {
               console.error("[WH] email send error:", e?.message || e);
             }
