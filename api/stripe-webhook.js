@@ -9,7 +9,7 @@ import { sendEmail } from "./_email.js";
 export const config = { api: { bodyParser: false } };
 export const runtime = "nodejs";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", { apiVersion: "2024-06-20" });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", { apiVersion: "2024-04-10" });
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
@@ -44,28 +44,33 @@ export default async function handler(req, res) {
         const subId = session.subscription;
         const customerId = session.customer;
 
-        if (subId && customerId) {
-          const sub = await stripe.subscriptions.retrieve(subId);
+        // Handle both one-time payments and subscriptions
+        if (customerId && session.payment_status === 'paid') {
           const customer = await stripe.customers.retrieve(customerId);
           const email = customer.email || customer?.metadata?.userId;
 
           if (email) {
-            // Ensure user row and record subscription
+            // Ensure user row exists
             try { await upsertUser({ id: email, email }); } catch {}
-            await upsertSubscription({
-              userId: email,
-              stripeSubId: sub.id,
-              status: sub.status,
-              currentPeriodEnd: new Date(sub.current_period_end * 1000),
-            });
 
-            // Generate license, store, and email it
+            // If it's a subscription, record it
+            if (subId) {
+              const sub = await stripe.subscriptions.retrieve(subId);
+              await upsertSubscription({
+                userId: email,
+                stripeSubId: sub.id,
+                status: sub.status,
+                currentPeriodEnd: new Date(sub.current_period_end * 1000),
+              });
+            }
+
+            // Generate license, store, and email it (for both one-time and subscription)
             const license = makeLicense();
             try {
               await supa.from("license_keys").insert({
                 license_key: license,
                 customer_id: customerId,
-                subscription_id: subId,
+                subscription_id: subId || null,
                 checkout_session_id: session.id,
                 status: "active",
               });
@@ -79,9 +84,10 @@ export default async function handler(req, res) {
                 subject: "Your Absolute Assistant license key",
                 html: `
                   <div style="font-family:system-ui,Segoe UI,Roboto,Arial">
-                    <p>Thanks for subscribing! Here is your license key:</p>
-                    <p style="font-family:ui-monospace,Consolas,Menlo,monospace;font-size:16px"><b>${license}</b></p>
-                    <p>You can also retrieve it any time from the success page after checkout.</p>
+                    <p>Thanks for your purchase! Here is your license key:</p>
+                    <p style="font-family:ui-monospace,Consolas,Menlo,monospace;font-size:16px;background:#f3f4f6;padding:12px;border-radius:8px;text-align:center"><b>${license}</b></p>
+                    <p>Enter this key in the Absolute Assistant app to activate your license.</p>
+                    <p>You can also retrieve it from the download page: <a href="${process.env.APP_URL || 'https://www.lancelot.world'}/download?session_id=${session.id}">View License Key</a></p>
                   </div>
                 `,
               });
