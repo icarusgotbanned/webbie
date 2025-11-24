@@ -67,15 +67,28 @@ export default async function handler(req, res) {
             // Generate license, store, and email it (for both one-time and subscription)
             const license = makeLicense();
             try {
-              await supa.from("license_keys").insert({
-                license_key: license,
-                customer_id: customerId,
-                subscription_id: subId || null,
-                checkout_session_id: session.id,
-                status: "active",
-              });
+              const { data: licenseData, error: licenseError } = await supa
+                .from("license_keys")
+                .insert({
+                  license_key: license,
+                  customer_id: customerId,
+                  subscription_id: subId || null,
+                  checkout_session_id: session.id,
+                  status: "active",
+                })
+                .select()
+                .single();
+
+              if (licenseError) {
+                console.error("[WH] license insert error:", licenseError);
+                throw licenseError;
+              }
+
+              console.log("[WH] License key created:", license, "for session:", session.id);
             } catch (e) {
-              console.error("[WH] license insert error:", e);
+              console.error("[WH] Failed to create license key:", e);
+              // Don't throw - continue to try emailing even if DB insert fails
+              // The user can still get the key from email if that works
             }
 
             try {
