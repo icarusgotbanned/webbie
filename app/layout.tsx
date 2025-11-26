@@ -1,21 +1,14 @@
-import type { Metadata } from 'next'
-import './globals.css'
+export const metadata = {
+  title: "Absolute Assistant",
+  description: "Your local AI assistant",
+};
 
-export const metadata: Metadata = {
-  title: 'Absolute Assistant — Local AI Desktop RPA',
-  description: 'Your local AI that clicks, types and automates your desktop for you.',
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>{children}</body>
     </html>
-  )
+  );
 }
 
 
