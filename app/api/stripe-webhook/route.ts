@@ -136,7 +136,10 @@ export async function POST(req: NextRequest) {
             const customer = await stripe.customers.retrieve(
               typeof session.customer === 'string' ? session.customer : session.customer.id
             )
-            customerEmail = customer.email || null
+            // Check if customer is deleted before accessing email
+            if (!customer.deleted && 'email' in customer) {
+              customerEmail = customer.email || null
+            }
           } catch (err) {
             console.error('[webhook] Failed to retrieve customer:', err)
           }
@@ -210,7 +213,10 @@ export async function POST(req: NextRequest) {
           const customer = await stripe.customers.retrieve(
             typeof invoice.customer === 'string' ? invoice.customer : invoice.customer.id
           )
-          customerEmail = customer.email || null
+          // Check if customer is deleted before accessing email
+          if (!customer.deleted && 'email' in customer) {
+            customerEmail = customer.email || null
+          }
         } catch (err) {
           console.error('[webhook] Failed to retrieve customer for invoice:', err)
         }

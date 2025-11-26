@@ -40,7 +40,10 @@ async function getCustomerEmailFromSession(sessionId: string): Promise<string | 
       const customer = await stripe.customers.retrieve(
         typeof session.customer === 'string' ? session.customer : session.customer.id
       )
-      return customer.email || null
+      // Check if customer is deleted before accessing email
+      if (!customer.deleted && 'email' in customer) {
+        return customer.email || null
+      }
     }
 
     return null
