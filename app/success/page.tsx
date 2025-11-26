@@ -95,11 +95,12 @@ function isExpired(expiresAt: string): boolean {
 }
 
 export default async function SuccessPage({ searchParams }: SuccessPageProps) {
-  let email = searchParams.email
+  let email: string | undefined = searchParams.email
 
   // If no email but we have session_id, fetch email from Stripe
   if (!email && searchParams.session_id) {
-    email = await getCustomerEmailFromSession(searchParams.session_id)
+    const fetchedEmail = await getCustomerEmailFromSession(searchParams.session_id)
+    email = fetchedEmail || undefined
   }
 
   if (!email) {
