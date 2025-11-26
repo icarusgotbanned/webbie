@@ -81,23 +81,35 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* CTA Cards */}
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto px-4 pt-6">
-                <Link href="/download" className="bg-gradient-to-br from-blue-600 to-emerald-500 rounded-xl p-6 text-white hover:opacity-90 transition shadow-lg shadow-blue-500/20">
-                  <div className="font-bold text-lg mb-2">Download Now</div>
-                  <div className="text-sm opacity-90">Get started in minutes</div>
+              {/* Primary CTA */}
+              <div className="pt-4">
+                <button
+                  onClick={handleCheckout}
+                  disabled={isLoading}
+                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-bold text-lg hover:opacity-90 transition disabled:opacity-50 shadow-lg shadow-blue-500/20"
+                >
+                  {isLoading ? 'Processing...' : 'Get Absolute Assistant — $9/month'}
+                </button>
+                <p className="text-xs text-slate-500 mt-3">Windows only • 7-day money-back guarantee</p>
+              </div>
+
+              {/* Quick Links */}
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto px-4 pt-8">
+                <Link href="/reputation" className="bg-[#161b22] border border-white/5 rounded-xl p-5 hover:border-blue-500/30 transition text-center">
+                  <div className="font-bold text-base mb-1 text-slate-200">Reputation</div>
+                  <div className="text-xs text-slate-400">Reviews & testimonials</div>
                 </Link>
-                <Link href="/reputation" className="bg-[#161b22] border border-white/5 rounded-xl p-6 hover:border-blue-500/30 transition">
-                  <div className="font-bold text-lg mb-2 text-slate-200">See Reviews</div>
-                  <div className="text-sm text-slate-400">What users are saying</div>
+                <Link href="/local-app" className="bg-[#161b22] border border-white/5 rounded-xl p-5 hover:border-blue-500/30 transition text-center">
+                  <div className="font-bold text-base mb-1 text-slate-200">Why Local App</div>
+                  <div className="text-xs text-slate-400">Privacy & speed</div>
                 </Link>
-                <Link href="/local-app" className="bg-[#161b22] border border-white/5 rounded-xl p-6 hover:border-blue-500/30 transition">
-                  <div className="font-bold text-lg mb-2 text-slate-200">Why Local?</div>
-                  <div className="text-sm text-slate-400">Privacy and speed</div>
+                <Link href="/trust" className="bg-[#161b22] border border-white/5 rounded-xl p-5 hover:border-blue-500/30 transition text-center">
+                  <div className="font-bold text-base mb-1 text-slate-200">Trust & Safety</div>
+                  <div className="text-xs text-slate-400">Secure installation</div>
                 </Link>
-                <Link href="/trust" className="bg-[#161b22] border border-white/5 rounded-xl p-6 hover:border-blue-500/30 transition">
-                  <div className="font-bold text-lg mb-2 text-slate-200">Safe Install</div>
-                  <div className="text-sm text-slate-400">Code signed & secure</div>
+                <Link href="/download" className="bg-[#161b22] border border-white/5 rounded-xl p-5 hover:border-blue-500/30 transition text-center">
+                  <div className="font-bold text-base mb-1 text-slate-200">Download</div>
+                  <div className="text-xs text-slate-400">After purchase</div>
                 </Link>
               </div>
             </section>
