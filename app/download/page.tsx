@@ -27,78 +27,23 @@ async function getLicenseKey(sessionId: string): Promise<string | null> {
 export default async function DownloadPage({ searchParams }: DownloadPageProps) {
   const sessionId = searchParams.session_id
 
-  if (!sessionId) {
-    return (
-      <div className="min-h-screen bg-[#0a0e1a] text-slate-50">
-        <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white font-black text-xs">
-                AA
-              </div>
-              <div className="font-bold text-sm sm:text-base">Absolute Assistant</div>
-            </Link>
-          </div>
-        </header>
-        <main className="flex items-center justify-center px-4 py-8 min-h-[calc(100vh-60px)]">
-          <div className="rounded-3xl border border-white/5 bg-[#161b22] backdrop-blur-sm px-8 py-10 max-w-md text-center shadow-2xl shadow-black/40">
-            <h1 className="mb-3 text-xl font-black">No purchase found</h1>
-            <p className="mb-6 text-sm text-slate-300">
-              To download Absolute Assistant, please complete your purchase first.
-            </p>
-            <Link
-              href="/"
-              className="inline-flex rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-5 py-2.5 text-sm font-bold text-white hover:opacity-90 transition"
-            >
-              Back to homepage
-            </Link>
-          </div>
-        </main>
-      </div>
-    )
-  }
-
+  // Check if this is a post-purchase visit
   let paid = false
-  try {
-    const session = await stripe.checkout.sessions.retrieve(sessionId)
-    paid = session.payment_status === 'paid'
-  } catch (e) {
-    console.error('Error verifying checkout session', e)
+  let licenseKey: string | null = null
+
+  if (sessionId) {
+    try {
+      const session = await stripe.checkout.sessions.retrieve(sessionId)
+      paid = session.payment_status === 'paid'
+      
+      if (paid) {
+        licenseKey = await getLicenseKey(sessionId)
+      }
+    } catch (e) {
+      console.error('Error verifying checkout session', e)
+    }
   }
 
-  if (!paid) {
-    return (
-      <div className="min-h-screen bg-[#0a0e1a] text-slate-50">
-        <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white font-black text-xs">
-                AA
-              </div>
-              <div className="font-bold text-sm sm:text-base">Absolute Assistant</div>
-            </Link>
-          </div>
-        </header>
-        <main className="flex items-center justify-center px-4 py-8 min-h-[calc(100vh-60px)]">
-          <div className="rounded-3xl border border-white/5 bg-[#161b22] backdrop-blur-sm px-8 py-10 max-w-md text-center shadow-2xl shadow-black/40">
-            <h1 className="mb-3 text-xl font-black">Payment not confirmed</h1>
-            <p className="mb-6 text-sm text-slate-300">
-              We could not verify your payment. If you were charged, please contact support with your receipt.
-            </p>
-            <Link
-              href="/"
-              className="inline-flex rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-5 py-2.5 text-sm font-bold text-white hover:opacity-90 transition"
-            >
-              Back to homepage
-            </Link>
-          </div>
-        </main>
-      </div>
-    )
-  }
-
-  // Fetch license key from Supabase
-  const licenseKey = await getLicenseKey(sessionId)
 
   return (
     <div className="min-h-screen bg-[#0a0e1a] text-slate-50">
@@ -125,15 +70,15 @@ export default async function DownloadPage({ searchParams }: DownloadPageProps) 
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white font-black text-2xl mx-auto mb-4">
           AA
         </div>
-        <h1 className="mb-3 text-2xl font-black">Thank you for your purchase</h1>
+        <h1 className="mb-3 text-2xl font-black">Download Absolute Assistant</h1>
         <p className="mb-6 text-sm text-slate-300">
-          Your license is active. Your license key has been emailed to you and is shown below.
+          Download is completely free. A license key is required to activate the app after installation.
         </p>
 
-        {/* License Key Display */}
-        {licenseKey ? (
-          <div className="mb-6 p-4 rounded-xl bg-[#0a0e1a] border border-white/10">
-            <p className="text-xs text-slate-400 mb-2">Your License Key:</p>
+        {/* License Key Display - Only show if purchased */}
+        {paid && licenseKey ? (
+          <div className="mb-6 p-4 rounded-xl bg-[#0a0e1a] border border-emerald-500/20">
+            <p className="text-xs text-emerald-400 mb-2 font-semibold">✓ Your License Key (Active):</p>
             <div className="font-mono text-lg font-bold text-emerald-400 break-all select-all">
               {licenseKey}
             </div>
@@ -141,11 +86,23 @@ export default async function DownloadPage({ searchParams }: DownloadPageProps) 
               Copy this key and enter it in the Absolute Assistant app to activate your license.
             </p>
           </div>
-        ) : (
+        ) : paid ? (
           <div className="mb-6 p-4 rounded-xl bg-[#0a0e1a] border border-white/10">
             <p className="text-sm text-slate-400">
               Your license key is being generated. Please check your email or refresh this page in a moment.
             </p>
+          </div>
+        ) : (
+          <div className="mb-6 p-4 rounded-xl bg-[#0a0e1a] border border-blue-500/20">
+            <p className="text-sm text-slate-300 mb-2">
+              Need a license key to activate?
+            </p>
+            <Link
+              href="/#pricing"
+              className="text-sm text-blue-400 hover:text-blue-300 transition font-semibold"
+            >
+              Purchase a license key →
+            </Link>
           </div>
         )}
 
@@ -161,12 +118,6 @@ export default async function DownloadPage({ searchParams }: DownloadPageProps) 
             Download Absolute Assistant for Windows
           </a>
           
-          {/* Placeholder if installer doesn't exist */}
-          <div className="bg-[#161b22] border border-white/5 rounded-xl p-4 text-center">
-            <p className="text-sm text-slate-400">
-              Installer not available yet? The download will be available immediately after purchase.
-            </p>
-          </div>
           
           {/* Trust Indicators */}
           <div className="flex flex-wrap justify-center items-center gap-4 text-xs text-slate-400 pt-2">
@@ -192,8 +143,13 @@ export default async function DownloadPage({ searchParams }: DownloadPageProps) 
           <p className="text-xs text-slate-500 text-center px-4">
             If Windows shows a security warning, click "More info" to view our verified digital signature.
           </p>
+          {paid && (
+            <p className="text-xs text-slate-400 text-center">
+              Keep your license key private. Your purchase allows personal use only.
+            </p>
+          )}
           <p className="text-xs text-slate-400 text-center">
-            Keep this installer and license key private. Your purchase allows personal use only.
+            After installation, you'll need a license key to activate the app. Download is free for everyone.
           </p>
         </div>
         <Link

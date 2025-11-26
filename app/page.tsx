@@ -70,24 +70,34 @@ export default function Page() {
           {/* Hero Section */}
           <section className="text-center space-y-8">
             <div className="space-y-6">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent leading-tight px-4">
-                Stop Clicking, Start Commanding
-              </h1>
-              <p className="text-lg sm:text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed px-4">
+              <div className="px-4 pb-3">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent leading-[1.15]">
+                  Stop Clicking, Start Commanding
+                </h1>
+              </div>
+              <p className="text-lg sm:text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed px-4 pt-2">
                 Automate your daily routine with a local AI assistant. Open apps, draft emails, fill forms—all with simple voice commands or text.
               </p>
             </div>
 
-            {/* Primary CTA */}
-            <div className="pt-4">
-              <button
-                onClick={handleCheckout}
-                disabled={isLoading}
-                className="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-bold text-lg hover:opacity-90 transition disabled:opacity-50 shadow-lg shadow-blue-500/20"
-              >
-                {isLoading ? 'Processing...' : 'Get Absolute Assistant — $9/month'}
-              </button>
-              <p className="text-xs text-slate-500 mt-3">Windows only • 7-day money-back guarantee</p>
+            {/* Primary CTAs */}
+            <div className="pt-4 space-y-4">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link
+                  href="/download"
+                  className="px-8 py-4 rounded-xl bg-[#161b22] border border-white/10 text-white font-bold text-lg hover:bg-[#1f2937] hover:border-blue-500/30 transition shadow-lg"
+                >
+                  Download Free
+                </Link>
+                <button
+                  onClick={handleCheckout}
+                  disabled={isLoading}
+                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-bold text-lg hover:opacity-90 transition disabled:opacity-50 shadow-lg shadow-blue-500/20"
+                >
+                  {isLoading ? 'Processing...' : 'Purchase License Key — $15/month'}
+                </button>
+              </div>
+              <p className="text-xs text-slate-500">Download is free • License key required to activate • Windows only</p>
             </div>
 
             {/* Quick Links */}
@@ -229,9 +239,9 @@ export default function Page() {
 
           {/* Pricing Section */}
           <section id="pricing" className="space-y-6">
-            <h2 className="text-3xl sm:text-4xl font-black text-center text-slate-100">Simple, Transparent Pricing</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-center text-slate-100">Purchase a License Key</h2>
             <p className="text-lg text-slate-300 text-center max-w-2xl mx-auto">
-              One price. All features. Cancel anytime.
+              The app is free to download. Purchase a license key to activate and unlock all features.
             </p>
             
             <div className="max-w-md mx-auto">
@@ -239,9 +249,9 @@ export default function Page() {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full -mr-16 -mt-16"></div>
                 <div className="relative">
                   <div className="text-5xl font-black mb-2 text-slate-100">
-                    $9<span className="text-xl font-semibold text-slate-400">/month</span>
+                    $15<span className="text-xl font-semibold text-slate-400">/month</span>
                   </div>
-                  <p className="text-sm text-slate-400 mb-6">All features included. No hidden fees.</p>
+                  <p className="text-sm text-slate-400 mb-6">License key activates full access. No hidden fees.</p>
                   
                   <ul className="space-y-3 mb-8 text-sm text-slate-300">
                     <li className="flex items-start gap-3">
@@ -271,12 +281,12 @@ export default function Page() {
                     disabled={isLoading}
                     className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-bold text-base hover:opacity-90 transition disabled:opacity-50 shadow-lg shadow-blue-500/20"
                   >
-                    {isLoading ? 'Processing...' : 'Start Free Trial'}
+                    {isLoading ? 'Processing...' : 'Purchase License Key'}
                   </button>
                   
                   <div className="mt-4 space-y-2 text-xs text-slate-400 text-center">
-                    <p>7-day money-back guarantee</p>
                     <p>Cancel anytime from your account or email</p>
+                    <p className="text-slate-500">App download is always free</p>
                   </div>
                 </div>
               </div>
@@ -286,6 +296,13 @@ export default function Page() {
           {/* FAQ Section */}
           <section id="faq" className="space-y-4 max-w-3xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-black text-center text-slate-100 mb-10">Frequently Asked Questions</h2>
+            
+            <details className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <summary className="font-semibold cursor-pointer text-slate-200 text-lg">Is the download really free? Do I need to purchase anything?</summary>
+              <p className="mt-3 text-sm text-slate-400 leading-relaxed">
+                Yes, the download is completely free for everyone. Anyone can download and install Absolute Assistant at no cost. However, to activate the app and use its features, you'll need to purchase a license key. The license key is $15/month and unlocks full functionality.
+              </p>
+            </details>
             
             <details className="rounded-xl border border-white/5 bg-[#161b22] p-5">
               <summary className="font-semibold cursor-pointer text-slate-200 text-lg">Why should I download a local app instead of using a web version?</summary>
