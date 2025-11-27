@@ -48,7 +48,7 @@ export default async function DownloadPage({ searchParams }: DownloadPageProps) 
   return (
     <div className="min-h-screen bg-[#0a0e1a] text-slate-50">
       <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50 mb-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-[112px] flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <img 
               src="/logo.png" 
