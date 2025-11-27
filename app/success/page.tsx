@@ -30,6 +30,14 @@ async function getCustomerEmailFromSession(sessionId: string): Promise<string | 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId)
     
+    console.log('[success] Checkout session status:', {
+      id: session.id,
+      paymentStatus: session.payment_status,
+      status: session.status,
+      customerEmail: session.customer_email,
+      customer: session.customer,
+    })
+    
     // Try customer_email first
     if (session.customer_email) {
       return session.customer_email

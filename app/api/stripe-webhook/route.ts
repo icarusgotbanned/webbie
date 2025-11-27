@@ -87,6 +87,9 @@ async function sendLicenseEmail(email: string, rawLicense: string): Promise<void
   console.log('  HTML Body:', emailHtml)
 }
 
+// Disable body parsing - we need raw body for signature verification
+export const runtime = 'nodejs'
+
 export async function POST(req: NextRequest) {
   try {
     // Verify webhook secret
@@ -95,13 +98,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Webhook misconfigured' }, { status: 500 })
     }
 
-    // Get raw body for signature verification
-    const body = await req.text()
+    // Get raw body as buffer for signature verification
+    // Next.js App Router requires reading as arrayBuffer then converting
+    const arrayBuffer = await req.arrayBuffer()
+    const body = Buffer.from(arrayBuffer)
     const signature = req.headers.get('stripe-signature')
 
     if (!signature) {
+      console.error('[webhook] Missing stripe-signature header')
       return NextResponse.json({ error: 'Missing stripe-signature header' }, { status: 400 })
     }
+
+    console.log('[webhook] Webhook received:', {
+      hasSignature: !!signature,
+      bodyLength: body.length,
+      webhookSecretSet: !!process.env.STRIPE_WEBHOOK_SECRET,
+    })
 
     // Verify webhook signature
     let event: Stripe.Event
@@ -113,6 +125,8 @@ export async function POST(req: NextRequest) {
       )
     } catch (err: any) {
       console.error('[webhook] Signature verification failed:', err.message)
+      console.error('[webhook] Error type:', err.constructor.name)
+      console.error('[webhook] Body preview:', body.toString().substring(0, 200))
       return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 })
     }
 
@@ -137,9 +151,21 @@ export async function POST(req: NextRequest) {
         }
 
         // Get customer email from Stripe
+        // Priority: customer_details.email > customer_email > fetch from customer object
         let customerEmail: string | null = null
 
-        if (session.customer) {
+        // First, check customer_details.email (most reliable in checkout sessions)
+        if (session.customer_details?.email) {
+          customerEmail = session.customer_details.email
+        }
+
+        // Fallback to customer_email if available
+        if (!customerEmail && session.customer_email) {
+          customerEmail = session.customer_email
+        }
+
+        // Last resort: fetch customer object
+        if (!customerEmail && session.customer) {
           try {
             const customer = await stripe.customers.retrieve(
               typeof session.customer === 'string' ? session.customer : session.customer.id
@@ -153,14 +179,11 @@ export async function POST(req: NextRequest) {
           }
         }
 
-        // Fallback to customer_email if available
-        if (!customerEmail && session.customer_email) {
-          customerEmail = session.customer_email
-        }
-
         if (!customerEmail) {
           console.error('[webhook] No customer email found for session:', session.id)
-          console.error('[webhook] Session data:', JSON.stringify(session, null, 2))
+          console.error('[webhook] Session customer:', session.customer)
+          console.error('[webhook] Session customer_email:', session.customer_email)
+          console.error('[webhook] Session customer_details:', JSON.stringify(session.customer_details, null, 2))
           break
         }
 
