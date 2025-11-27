@@ -131,7 +131,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
   if (!email) {
     return (
       <div className="min-h-screen bg-[#0a0e1a] text-slate-100">
-        <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50">
+        <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50 mb-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
               <img 
@@ -143,7 +143,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
             </Link>
           </div>
         </header>
-        <main className="flex items-center justify-center px-4 pt-24 sm:pt-32 pb-8 min-h-[calc(100vh-60px)]">
+        <main className="flex items-center justify-center px-4 pt-8 pb-8 min-h-[calc(100vh-60px)]">
           <div className="rounded-3xl border border-white/5 bg-[#161b22] backdrop-blur-sm px-8 py-10 max-w-md text-center shadow-2xl shadow-black/40">
             <h1 className="mb-3 text-xl font-black">Email Required</h1>
             <p className="mb-6 text-sm text-slate-300">
@@ -165,7 +165,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
 
   return (
     <div className="min-h-screen bg-[#0a0e1a] text-slate-100">
-      <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50 mb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <div className="w-7 h-7 rounded bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white font-black text-xs">

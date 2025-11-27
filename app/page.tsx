@@ -27,7 +27,7 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-[#0a0e1a] text-slate-100">
       {/* Header */}
-      <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50 mb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <img 
@@ -67,10 +67,10 @@ export default function Page() {
 
       {/* Main Content */}
       <main className="flex-1">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-8 sm:pb-12 space-y-16 sm:space-y-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-12 space-y-16 sm:space-y-24">
           
           {/* Hero Section */}
-          <section className="text-center space-y-8 pt-8">
+          <section className="text-center space-y-8">
             <div className="space-y-6">
               <div className="px-4 pb-3">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent leading-[1.15]">
