@@ -134,14 +134,16 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
         <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white font-black text-xs">
-                AA
-              </div>
+              <img 
+                src="/logo.png" 
+                alt="Absolute Assistant" 
+                className="w-7 h-7 rounded object-contain"
+              />
               <div className="font-bold text-sm sm:text-base">Absolute Assistant</div>
             </Link>
           </div>
         </header>
-        <main className="flex items-center justify-center px-4 pt-16 sm:pt-20 pb-8 min-h-[calc(100vh-60px)]">
+        <main className="flex items-center justify-center px-4 pt-24 sm:pt-32 pb-8 min-h-[calc(100vh-60px)]">
           <div className="rounded-3xl border border-white/5 bg-[#161b22] backdrop-blur-sm px-8 py-10 max-w-md text-center shadow-2xl shadow-black/40">
             <h1 className="mb-3 text-xl font-black">Email Required</h1>
             <p className="mb-6 text-sm text-slate-300">
@@ -181,9 +183,11 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
 
       <main className="flex items-center justify-center px-4 py-8 min-h-[calc(100vh-60px)]">
         <div className="rounded-3xl border border-white/5 bg-[#161b22] backdrop-blur-sm px-6 sm:px-8 py-8 sm:py-10 max-w-lg w-full text-center shadow-2xl shadow-black/40">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white font-black text-2xl mx-auto mb-4">
-            AA
-          </div>
+          <img 
+            src="/logo.png" 
+            alt="Absolute Assistant" 
+            className="w-16 h-16 rounded-2xl object-contain mx-auto mb-4"
+          />
           <h1 className="mb-3 text-2xl font-black">Purchase Successful!</h1>
           <p className="mb-6 text-sm text-slate-300">
             Your license key has been sent to <strong className="text-slate-200">{email}</strong>

@@ -7,9 +7,11 @@ export default function ReputationPage() {
       <header className="border-b border-white/5 bg-[#0d1117]/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white font-black text-xs">
-              AA
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Absolute Assistant" 
+              className="w-7 h-7 rounded object-contain"
+            />
             <div className="font-bold text-sm sm:text-base">Absolute Assistant</div>
           </Link>
           <nav className="hidden sm:flex gap-6 text-sm">
@@ -22,9 +24,9 @@ export default function ReputationPage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-16 sm:pt-20 pb-8 sm:pb-12 space-y-16">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-8 sm:pb-12 space-y-16">
         {/* Hero */}
-        <section className="text-center space-y-4 pt-4">
+        <section className="text-center space-y-4 pt-8">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
             Trusted by Users
           </h1>
