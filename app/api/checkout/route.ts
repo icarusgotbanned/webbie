@@ -1,38 +1,31 @@
-import Stripe from 'stripe'
 import { NextRequest, NextResponse } from 'next/server'
+import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2024-04-10',
 })
 
 export async function POST(req: NextRequest) {
   try {
-    const origin = req.nextUrl.origin
-    const priceId = process.env.STRIPE_PRICE_ID
-
+    const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID || process.env.STRIPE_PRICE_ID
     if (!priceId) {
-      return NextResponse.json({ error: 'STRIPE_PRICE_ID missing' }, { status: 500 })
+      return NextResponse.json({ error: 'Missing STRIPE_PRICE_ID' }, { status: 500 })
     }
 
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'https://www.lancelot.world'
+
     const session = await stripe.checkout.sessions.create({
-      mode: 'payment',
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      success_url: `${origin}/download?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/`,
+      mode: 'subscription',
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${appUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${appUrl}/`,
     })
 
     return NextResponse.json({ url: session.url })
-  } catch (err: any) {
-    console.error('Stripe checkout error', err)
-    return NextResponse.json(
-      { error: err?.message || 'Unable to create checkout session' },
-      { status: 500 }
-    )
+  } catch (error: any) {
+    console.error('[checkout] error:', error)
+    const message = error?.raw?.message || error?.message || 'Checkout error'
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }
 

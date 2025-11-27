@@ -92,7 +92,7 @@ export default async function handler(req, res) {
             }
 
             try {
-              const appUrl = process.env.APP_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://absoluteassistant.site';
+              const appUrl = process.env.APP_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://www.lancelot.world';
               const downloadUrl = `${appUrl}/download?session_id=${session.id}`;
               
               const emailHtml = `
