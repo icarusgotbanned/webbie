@@ -1,9 +1,7 @@
 # Track installer files with Git LFS
 public/downloads/*.exe filter=lfs diff=lfs merge=lfs -text
-
 # Track all large binary files
 *.exe filter=lfs diff=lfs merge=lfs -text
 *.msi filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
-
-
+AbsoluteAssistantSetup.exe filter=lfs diff=lfs merge=lfs -text
