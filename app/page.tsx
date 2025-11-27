@@ -72,8 +72,8 @@ export default function Page() {
           {/* Hero Section */}
           <section className="text-center space-y-8 pt-16 sm:pt-20">
             <div className="space-y-6">
-              <div className="px-4 pb-3">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent leading-[1.15]">
+              <div className="px-4 pb-6 pt-4 overflow-visible">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent leading-[1.3] pb-6">
                   Stop Clicking, Start Commanding
                 </h1>
               </div>
