@@ -98,10 +98,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Webhook misconfigured' }, { status: 500 })
     }
 
-    // Get raw body as buffer for signature verification
-    // Next.js App Router requires reading as arrayBuffer then converting
-    const arrayBuffer = await req.arrayBuffer()
-    const body = Buffer.from(arrayBuffer)
+    // Get raw body - Stripe signature verification needs the exact raw body
+    // Read as text first to preserve exact formatting
+    const body = await req.text()
     const signature = req.headers.get('stripe-signature')
 
     if (!signature) {
@@ -109,25 +108,41 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing stripe-signature header' }, { status: 400 })
     }
 
+    // Verify webhook secret is set and matches
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+    if (!webhookSecret) {
+      console.error('[webhook] STRIPE_WEBHOOK_SECRET environment variable is not set')
+      return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 })
+    }
+
     console.log('[webhook] Webhook received:', {
       hasSignature: !!signature,
       bodyLength: body.length,
-      webhookSecretSet: !!process.env.STRIPE_WEBHOOK_SECRET,
+      webhookSecretLength: webhookSecret.length,
+      webhookSecretPrefix: webhookSecret.substring(0, 5) + '...',
     })
 
     // Verify webhook signature
     let event: Stripe.Event
     try {
+      // Stripe accepts either string or Buffer - use string for exact match
       event = stripe.webhooks.constructEvent(
         body,
         signature,
-        process.env.STRIPE_WEBHOOK_SECRET
+        webhookSecret
       )
     } catch (err: any) {
       console.error('[webhook] Signature verification failed:', err.message)
-      console.error('[webhook] Error type:', err.constructor.name)
-      console.error('[webhook] Body preview:', body.toString().substring(0, 200))
-      return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 })
+      console.error('[webhook] Webhook secret starts with:', webhookSecret.substring(0, 10))
+      console.error('[webhook] Signature header:', signature.substring(0, 50) + '...')
+      console.error('[webhook] Body length:', body.length)
+      console.error('[webhook] Body first 100 chars:', body.substring(0, 100))
+      
+      // Common issue: webhook secret mismatch
+      return NextResponse.json({ 
+        error: `Webhook signature verification failed: ${err.message}`,
+        hint: 'Verify STRIPE_WEBHOOK_SECRET matches the signing secret in Stripe Dashboard'
+      }, { status: 400 })
     }
 
     console.log('[webhook] Event received:', event.type, 'livemode:', event.livemode)

@@ -193,10 +193,13 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
             <>
               {/* License Hash Display */}
               <div className="mb-6 p-4 rounded-xl bg-[#0a0e1a] border border-white/10">
-                <p className="text-xs text-slate-400 mb-2">License Hash:</p>
+                <p className="text-xs text-slate-400 mb-2">License Hash (stored in database):</p>
                 <div className="font-mono text-sm font-bold text-emerald-400 break-all select-all">
                   {license.license_hash}
                 </div>
+                <p className="text-xs text-slate-500 mt-3">
+                  <strong>Note:</strong> This is the SHA256 hash of your raw license key. The raw key (UUID format) was sent to your email and is what you enter in the app. The hash is stored for security—we never store the raw key in the database.
+                </p>
               </div>
 
               {/* Expiry Information */}
