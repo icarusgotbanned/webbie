@@ -68,10 +68,10 @@ SUPABASE_SERVICE_ROLE_KEY=xxx
 
 # Optional: Email service (Resend)
 RESEND_API_KEY=xxx
-FROM_EMAIL=noreply@yourdomain.com
+FROM_EMAIL=noreply@absoluteassistant.site
 
 # App URL
-NEXT_PUBLIC_APP_URL=https://www.lancelot.world
+NEXT_PUBLIC_APP_URL=https://absoluteassistant.site
 ```
 
 ## Key Files

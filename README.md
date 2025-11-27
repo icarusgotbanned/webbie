@@ -43,7 +43,7 @@ Deploy to Vercel:
 3. Deploy automatically on push
 
 The download installer should be hosted at:
-`https://www.lancelot.world/downloads/AbsoluteAssistantSetup.exe`
+`https://absoluteassistant.site/downloads/AbsoluteAssistantSetup.exe`
 
 Update the URL in `app/download/page.tsx` if your installer is hosted elsewhere.
 

@@ -6,8 +6,8 @@ If licenses aren't being created or emails aren't being sent, follow these steps
 
 **Important:** Make sure your Stripe webhook is pointing to the **App Router** endpoint:
 
-- ✅ Correct: `https://www.lancelot.world/api/stripe-webhook`
-- ❌ Wrong: `https://www.lancelot.world/api/stripe-webhook` (old Pages Router)
+- ✅ Correct: `https://absoluteassistant.site/api/stripe-webhook`
+- ❌ Wrong: `https://absoluteassistant.site/api/stripe-webhook` (old Pages Router)
 
 In Stripe Dashboard:
 1. Go to **Developers** → **Webhooks**
@@ -29,7 +29,7 @@ SUPABASE_SERVICE_ROLE_KEY=xxx
 
 # Optional (for email)
 RESEND_API_KEY=xxx
-FROM_EMAIL=noreply@yourdomain.com
+FROM_EMAIL=noreply@absoluteassistant.site
 ```
 
 ## 3. Check Database Table
@@ -44,13 +44,13 @@ If you get an error, run `SUPABASE_LICENSES_TABLE.sql` again.
 
 ## 4. Test Webhook Manually
 
-Visit: `https://www.lancelot.world/api/stripe-webhook`
+Visit: `https://absoluteassistant.site/api/stripe-webhook`
 
 Should return: `{"ok":true,"route":"/api/stripe-webhook"}`
 
 ## 5. Debug License Lookup
 
-Visit: `https://www.lancelot.world/api/debug-license?email=your@email.com`
+Visit: `https://absoluteassistant.site/api/debug-license?email=your@email.com`
 
 This will show:
 - If the license exists

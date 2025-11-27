@@ -40,7 +40,7 @@ export default function Page() {
             <Link href="/reputation" className="text-slate-400 hover:text-slate-300 transition">Reputation</Link>
             <Link href="/local-app" className="text-slate-400 hover:text-slate-300 transition">Why Local App</Link>
             <Link href="/download" className="text-slate-400 hover:text-slate-300 transition">Download</Link>
-            <a href="mailto:support@yourdomain.com" className="text-slate-400 hover:text-slate-300 transition">Contact</a>
+            <a href="mailto:absoluteassistant42@gmail.com" className="text-slate-400 hover:text-slate-300 transition">Contact</a>
           </nav>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -58,17 +58,17 @@ export default function Page() {
             <Link href="/reputation" className="block text-slate-400 hover:text-slate-300 transition py-2">Reputation</Link>
             <Link href="/local-app" className="block text-slate-400 hover:text-slate-300 transition py-2">Why Local App</Link>
             <Link href="/download" className="block text-slate-400 hover:text-slate-300 transition py-2">Download</Link>
-            <a href="mailto:support@yourdomain.com" className="block text-slate-400 hover:text-slate-300 transition py-2">Contact</a>
+            <a href="mailto:absoluteassistant42@gmail.com" className="block text-slate-400 hover:text-slate-300 transition py-2">Contact</a>
           </nav>
         )}
       </header>
 
       {/* Main Content */}
       <main className="flex-1">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-16 sm:space-y-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-16 sm:pt-20 pb-8 sm:pb-12 space-y-16 sm:space-y-24">
           
           {/* Hero Section */}
-          <section className="text-center space-y-8">
+          <section className="text-center space-y-8 pt-4">
             <div className="space-y-6">
               <div className="px-4 pb-3">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent leading-[1.15]">
@@ -356,7 +356,7 @@ export default function Page() {
             <details className="rounded-xl border border-white/5 bg-[#161b22] p-5">
               <summary className="font-semibold cursor-pointer text-slate-200 text-lg">What if I need help or have questions?</summary>
               <p className="mt-3 text-sm text-slate-400 leading-relaxed">
-                We offer priority email support to all subscribers. Email us at <a href="mailto:support@yourdomain.com" className="text-blue-400 hover:underline">support@yourdomain.com</a> and we'll respond promptly. We're committed to helping you get the most out of Absolute Assistant.
+                We offer priority email support to all subscribers. Email us at <a href="mailto:absoluteassistant42@gmail.com" className="text-blue-400 hover:underline">absoluteassistant42@gmail.com</a> and we'll respond promptly. We're committed to helping you get the most out of Absolute Assistant.
               </p>
             </details>
           </section>
@@ -374,7 +374,7 @@ export default function Page() {
             <div className="flex flex-wrap justify-center gap-6">
               <Link href="/terms" className="hover:text-slate-300 transition">Terms of Service</Link>
               <Link href="/privacy" className="hover:text-slate-300 transition">Privacy Policy</Link>
-              <a href="mailto:support@yourdomain.com" className="hover:text-slate-300 transition">Support</a>
+              <a href="mailto:absoluteassistant42@gmail.com" className="hover:text-slate-300 transition">Support</a>
             </div>
           </div>
         </div>

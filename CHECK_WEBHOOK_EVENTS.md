@@ -55,7 +55,7 @@ If you want to test your webhook manually:
 Make sure your webhook is:
 - ✅ Enabled
 - ✅ Listening for `checkout.session.completed`
-- ✅ Pointing to correct URL: `https://www.lancelot.world/api/stripe-webhook`
+- ✅ Pointing to correct URL: `https://absoluteassistant.site/api/stripe-webhook`
 - ✅ Using correct webhook secret in environment variables
 
 ## Common Issues
@@ -74,13 +74,13 @@ Make sure your webhook is:
 **Fix:**
 - Check Vercel logs for errors
 - Verify webhook secret matches
-- Test webhook endpoint: `https://www.lancelot.world/api/stripe-webhook` should return `{"ok":true}`
+- Test webhook endpoint: `https://absoluteassistant.site/api/stripe-webhook` should return `{"ok":true}`
 
 ### Issue: Webhook events not reaching your endpoint
 **Cause:** URL incorrect or endpoint not accessible
 
 **Fix:**
 - Verify webhook URL is correct
-- Test endpoint is accessible: Visit `https://www.lancelot.world/api/stripe-webhook` in browser
+- Test endpoint is accessible: Visit `https://absoluteassistant.site/api/stripe-webhook` in browser
 - Check Vercel deployment is live
 

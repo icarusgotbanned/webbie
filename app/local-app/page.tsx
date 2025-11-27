@@ -17,14 +17,14 @@ export default function LocalAppPage() {
             <Link href="/reputation" className="text-slate-400 hover:text-slate-300 transition">Reputation</Link>
             <Link href="/local-app" className="text-blue-400 hover:text-blue-300 transition">Why Local App</Link>
             <Link href="/download" className="text-slate-400 hover:text-slate-300 transition">Download</Link>
-            <a href="mailto:support@yourdomain.com" className="text-slate-400 hover:text-slate-300 transition">Contact</a>
+            <a href="mailto:absoluteassistant42@gmail.com" className="text-slate-400 hover:text-slate-300 transition">Contact</a>
           </nav>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-12">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-16 sm:pt-20 pb-8 sm:pb-12 space-y-12">
         {/* Hero */}
-        <section className="text-center space-y-4">
+        <section className="text-center space-y-4 pt-4">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
             Why a Local App?
           </h1>
@@ -130,7 +130,7 @@ export default function LocalAppPage() {
             <div className="flex flex-wrap justify-center gap-6">
               <Link href="/terms" className="hover:text-slate-300 transition">Terms</Link>
               <Link href="/privacy" className="hover:text-slate-300 transition">Privacy</Link>
-              <a href="mailto:support@yourdomain.com" className="hover:text-slate-300 transition">Support</a>
+              <a href="mailto:absoluteassistant42@gmail.com" className="hover:text-slate-300 transition">Support</a>
             </div>
           </div>
         </div>

@@ -30,7 +30,7 @@ function generateLicenseKey(): { raw: string; hash: string } {
 
 // Email function (logs to console if email service not configured)
 async function sendLicenseEmail(email: string, rawLicense: string): Promise<void> {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'https://www.lancelot.world'
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'https://absoluteassistant.site'
   const successUrl = `${appUrl}/success?email=${encodeURIComponent(email)}`
 
   const emailHtml = `

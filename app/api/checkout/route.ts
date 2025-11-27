@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing STRIPE_PRICE_ID' }, { status: 500 })
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'https://www.lancelot.world'
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'https://absoluteassistant.site'
 
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',

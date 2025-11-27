@@ -141,7 +141,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
             </Link>
           </div>
         </header>
-        <main className="flex items-center justify-center px-4 py-8 min-h-[calc(100vh-60px)]">
+        <main className="flex items-center justify-center px-4 pt-16 sm:pt-20 pb-8 min-h-[calc(100vh-60px)]">
           <div className="rounded-3xl border border-white/5 bg-[#161b22] backdrop-blur-sm px-8 py-10 max-w-md text-center shadow-2xl shadow-black/40">
             <h1 className="mb-3 text-xl font-black">Email Required</h1>
             <p className="mb-6 text-sm text-slate-300">
@@ -174,7 +174,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
           <nav className="hidden sm:flex gap-6 text-sm">
             <Link href="/" className="text-slate-400 hover:text-slate-300 transition">Home</Link>
             <Link href="/download" className="text-slate-400 hover:text-slate-300 transition">Download</Link>
-            <a href="mailto:support@yourdomain.com" className="text-slate-400 hover:text-slate-300 transition">Contact</a>
+            <a href="mailto:absoluteassistant42@gmail.com" className="text-slate-400 hover:text-slate-300 transition">Contact</a>
           </nav>
         </div>
       </header>
@@ -306,7 +306,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
             <div className="flex flex-wrap justify-center gap-6">
               <Link href="/terms" className="hover:text-slate-300 transition">Terms</Link>
               <Link href="/privacy" className="hover:text-slate-300 transition">Privacy</Link>
-              <a href="mailto:support@yourdomain.com" className="hover:text-slate-300 transition">
+              <a href="mailto:absoluteassistant42@gmail.com" className="hover:text-slate-300 transition">
                 Support
               </a>
             </div>

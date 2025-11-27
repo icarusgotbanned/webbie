@@ -46,7 +46,7 @@ You can verify a raw license key matches a hash:
 
 ```bash
 # Using the verify endpoint
-curl -X POST https://www.lancelot.world/api/verify-license-key \
+curl -X POST https://absoluteassistant.site/api/verify-license-key \
   -H "Content-Type: application/json" \
   -d '{"rawLicenseKey": "550e8400-e29b-41d4-a716-446655440000"}'
 ```

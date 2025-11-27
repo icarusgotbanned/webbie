@@ -14,7 +14,7 @@ This guide explains how to switch from live mode to test mode for testing the li
 2. Click **"+ Add endpoint"**
 3. Enter your webhook URL:
    ```
-   https://www.lancelot.world/api/stripe-webhook
+   https://absoluteassistant.site/api/stripe-webhook
    ```
    (or your local URL if testing locally: `http://localhost:3000/api/stripe-webhook`)
 4. Click **"Select events to listen to"**
@@ -160,5 +160,5 @@ Full list: https://stripe.com/docs/testing
 ### License not created:
 - Check Vercel logs for webhook errors
 - Verify environment variables are set correctly
-- Test webhook endpoint: `https://www.lancelot.world/api/stripe-webhook` should return `{"ok":true}`
+- Test webhook endpoint: `https://absoluteassistant.site/api/stripe-webhook` should return `{"ok":true}`
 

@@ -3,7 +3,7 @@
   "channel": "stable",
   "windows": {
     "arch": "x64",
-    "url": "https://www.lancelotenterprises.com/absolute-assistant/releases/AbsoluteAssistantSetup-1.0.0.exe",
+    "url": "https://absoluteassistant.site/absolute-assistant/releases/AbsoluteAssistantSetup-1.0.0.exe",
     "sha256": "<paste SHA256 of installer>",
     "mandatory": false,
     "release_notes": "Initial public release."

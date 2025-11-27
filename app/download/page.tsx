@@ -11,7 +11,7 @@ interface DownloadPageProps {
 
 async function getLicenseKey(sessionId: string): Promise<string | null> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'https://www.lancelot.world'
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'https://absoluteassistant.site'
     const res = await fetch(`${baseUrl}/api/lookup-license?session_id=${encodeURIComponent(sessionId)}`, {
       cache: 'no-store',
     })
@@ -60,12 +60,12 @@ export default async function DownloadPage({ searchParams }: DownloadPageProps) 
             <Link href="/reputation" className="text-slate-400 hover:text-slate-300 transition">Reputation</Link>
             <Link href="/local-app" className="text-slate-400 hover:text-slate-300 transition">Why Local App</Link>
             <Link href="/download" className="text-blue-400 hover:text-blue-300 transition">Download</Link>
-            <a href="mailto:support@yourdomain.com" className="text-slate-400 hover:text-slate-300 transition">Contact</a>
+            <a href="mailto:absoluteassistant42@gmail.com" className="text-slate-400 hover:text-slate-300 transition">Contact</a>
           </nav>
         </div>
       </header>
 
-      <main className="flex items-center justify-center px-4 py-8 min-h-[calc(100vh-60px)]">
+      <main className="flex items-center justify-center px-4 pt-16 sm:pt-20 pb-8 min-h-[calc(100vh-60px)]">
         <div className="rounded-3xl border border-white/5 bg-[#161b22] backdrop-blur-sm px-6 sm:px-8 py-8 sm:py-10 max-w-lg w-full text-center shadow-2xl shadow-black/40">
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white font-black text-2xl mx-auto mb-4">
           AA
@@ -109,7 +109,7 @@ export default async function DownloadPage({ searchParams }: DownloadPageProps) 
         {/* Download Section */}
         <div className="space-y-4">
           <a
-            href="https://www.lancelot.world/downloads/AbsoluteAssistantSetup.exe"
+            href="https://absoluteassistant.site/downloads/AbsoluteAssistantSetup.exe"
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-8 py-4 text-base sm:text-lg font-bold text-white hover:opacity-90 transition shadow-lg shadow-blue-500/20 w-full sm:w-auto"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,7 +171,7 @@ export default async function DownloadPage({ searchParams }: DownloadPageProps) 
             <div className="flex flex-wrap justify-center gap-6">
               <Link href="/terms" className="hover:text-slate-300 transition">Terms</Link>
               <Link href="/privacy" className="hover:text-slate-300 transition">Privacy</Link>
-              <a href="mailto:support@yourdomain.com" className="hover:text-slate-300 transition">Support</a>
+              <a href="mailto:absoluteassistant42@gmail.com" className="hover:text-slate-300 transition">Support</a>
             </div>
           </div>
         </div>
