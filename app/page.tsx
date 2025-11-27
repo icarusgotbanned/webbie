@@ -169,7 +169,7 @@ export default function Home() {
                   <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
                     <h3 className="font-bold mb-2 text-slate-200">Fast Support</h3>
                     <p className="text-sm text-slate-400">
-                      Email us any time: <a href="mailto:support@yourdomain.com" className="text-blue-400 hover:underline">support@yourdomain.com</a>
+                      Email us any time: <a href="mailto:support@absoluteassistant.site" className="text-blue-400 hover:underline">support@absoluteassistant.site</a>
                     </p>
                   </div>
                 </div>

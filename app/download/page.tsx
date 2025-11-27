@@ -11,7 +11,7 @@ interface DownloadPageProps {
 
 async function getLicenseKey(sessionId: string): Promise<string | null> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'https://www.lancelot.world'
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'https://absoluteassistant.site'
     const res = await fetch(`${baseUrl}/api/lookup-license?session_id=${encodeURIComponent(sessionId)}`, {
       cache: 'no-store',
     })
@@ -107,7 +107,7 @@ export default async function DownloadPage({ searchParams }: DownloadPageProps) 
         )}
 
         <a
-          href="https://www.lancelot.world/downloads/AbsoluteAssistantSetup.exe"
+          href="https://absoluteassistant.site/downloads/AbsoluteAssistantSetup.exe"
           className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-3 text-base font-bold text-white hover:opacity-90 transition shadow-lg shadow-blue-500/20 mb-4"
         >
           Download Absolute Assistant for Windows
