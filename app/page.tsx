@@ -173,7 +173,7 @@ export default function Page() {
 
           {/* Features Section */}
           <section id="features" className="space-y-6">
-            <h2 className="text-3xl sm:text-4xl font-black text-center text-slate-100">Everything You Need</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-center text-slate-100 leading-[1.3] pb-4">Everything You Need</h2>
             <p className="text-lg text-slate-300 text-center max-w-2xl mx-auto">
               Powerful automation features that work seamlessly with your existing apps and workflows.
             </p>
@@ -241,7 +241,7 @@ export default function Page() {
 
           {/* Pricing Section */}
           <section id="pricing" className="space-y-6">
-            <h2 className="text-3xl sm:text-4xl font-black text-center text-slate-100">Purchase a License Key</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-center text-slate-100 leading-[1.3] pb-4">Purchase a License Key</h2>
             <p className="text-lg text-slate-300 text-center max-w-2xl mx-auto">
               The app is free to download. Purchase a license key to activate and unlock all features.
             </p>
@@ -250,7 +250,7 @@ export default function Page() {
               <div className="rounded-2xl border border-white/5 bg-[#161b22] p-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full -mr-16 -mt-16"></div>
                 <div className="relative">
-                  <div className="text-5xl font-black mb-2 text-slate-100">
+                  <div className="text-5xl font-black mb-2 text-slate-100 leading-[1.3] pb-4">
                     $15<span className="text-xl font-semibold text-slate-400">/month</span>
                   </div>
                   <p className="text-sm text-slate-400 mb-6">License key activates full access. No hidden fees.</p>
@@ -297,7 +297,7 @@ export default function Page() {
 
           {/* FAQ Section */}
           <section id="faq" className="space-y-4 max-w-3xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-black text-center text-slate-100 mb-10">Frequently Asked Questions</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-center text-slate-100 mb-10 leading-[1.3] pb-4">Frequently Asked Questions</h2>
             
             <details className="rounded-xl border border-white/5 bg-[#161b22] p-5">
               <summary className="font-semibold cursor-pointer text-slate-200 text-lg">Is the download really free? Do I need to purchase anything?</summary>

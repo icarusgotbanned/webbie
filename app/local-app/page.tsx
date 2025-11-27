@@ -26,8 +26,8 @@ export default function LocalAppPage() {
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-12 space-y-12">
         {/* Hero */}
-        <section className="text-center space-y-4">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+        <section className="text-center space-y-4 overflow-visible">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent leading-[1.3] pb-6">
             Why a Local App?
           </h1>
           <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">

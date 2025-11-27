@@ -74,7 +74,7 @@ export default async function DownloadPage({ searchParams }: DownloadPageProps) 
           alt="Absolute Assistant" 
           className="w-16 h-16 rounded-2xl object-contain mx-auto mb-4"
         />
-        <h1 className="mb-3 text-2xl font-black">Download Absolute Assistant</h1>
+        <h1 className="mb-3 text-2xl font-black leading-[1.3] pb-2">Download Absolute Assistant</h1>
         <p className="mb-6 text-sm text-slate-300">
           Download is completely free. A license key is required to activate the app after installation.
         </p>
