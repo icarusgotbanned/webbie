@@ -117,11 +117,19 @@ export async function POST(req: NextRequest) {
     }
 
     console.log('[webhook] Event received:', event.type, 'livemode:', event.livemode)
+    console.log('[webhook] Event ID:', event.id)
 
     // Handle different event types
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
+
+        console.log('[webhook] Processing checkout.session.completed:', {
+          sessionId: session.id,
+          paymentStatus: session.payment_status,
+          customer: session.customer,
+          customerEmail: session.customer_email,
+        })
 
         if (session.payment_status !== 'paid') {
           console.log('[webhook] Session not paid, skipping:', session.id)
@@ -152,11 +160,15 @@ export async function POST(req: NextRequest) {
 
         if (!customerEmail) {
           console.error('[webhook] No customer email found for session:', session.id)
+          console.error('[webhook] Session data:', JSON.stringify(session, null, 2))
           break
         }
 
+        console.log('[webhook] Customer email found:', customerEmail)
+
         // Generate license key (raw + hash)
         const { raw, hash } = generateLicenseKey()
+        console.log('[webhook] Generated license - hash:', hash.substring(0, 16) + '...')
 
         // Calculate expiry: 1 month from now
         const expiresAt = new Date()
@@ -164,6 +176,10 @@ export async function POST(req: NextRequest) {
 
         // Insert license into Supabase
         try {
+          console.log('[webhook] Inserting license into Supabase...')
+          console.log('[webhook] Supabase URL:', supabaseUrl ? '✓' : '✗')
+          console.log('[webhook] Service role key:', serviceRoleKey ? '✓' : '✗')
+
           const { data, error } = await supabase
             .from('licenses')
             .insert({
@@ -176,21 +192,26 @@ export async function POST(req: NextRequest) {
 
           if (error) {
             console.error('[webhook] Supabase insert error:', error)
+            console.error('[webhook] Error details:', JSON.stringify(error, null, 2))
             throw error
           }
 
-          console.log('[webhook] License created:', {
+          console.log('[webhook] License created successfully:', {
             id: data.id,
             email: customerEmail,
             expiresAt: expiresAt.toISOString(),
+            hashPrefix: hash.substring(0, 16) + '...',
           })
 
           // Send email with raw license key
+          console.log('[webhook] Sending license email...')
           await sendLicenseEmail(customerEmail, raw)
+          console.log('[webhook] Email sent (or logged to console)')
 
           console.log('[webhook] checkout.session.completed processed successfully')
-        } catch (err) {
+        } catch (err: any) {
           console.error('[webhook] Failed to create license:', err)
+          console.error('[webhook] Error stack:', err?.stack)
           // Don't throw - we still want to return 200 to Stripe
         }
 

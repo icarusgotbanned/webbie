@@ -55,22 +55,39 @@ async function getCustomerEmailFromSession(sessionId: string): Promise<string | 
 
 async function getLicense(email: string) {
   try {
+    console.log('[success] Fetching license for email:', email)
+    console.log('[success] Supabase URL:', supabaseUrl ? '✓' : '✗')
+    console.log('[success] Service role key:', serviceRoleKey ? '✓' : '✗')
+
     const { data, error } = await supabase
       .from('licenses')
       .select('license_hash, expires_at, created_at')
       .eq('user_email', email)
       .order('created_at', { ascending: false })
       .limit(1)
-      .single()
 
     if (error) {
       console.error('[success] License fetch error:', error)
+      console.error('[success] Error details:', JSON.stringify(error, null, 2))
       return null
     }
 
-    return data
-  } catch (err) {
+    // Handle no results - return null (not an error, just not created yet)
+    if (!data || data.length === 0) {
+      console.log('[success] No license found yet - webhook may not have processed')
+      return null
+    }
+
+    const license = data[0]
+    console.log('[success] License found:', {
+      hashPrefix: license.license_hash?.substring(0, 16) + '...',
+      expiresAt: license.expires_at,
+    })
+
+    return license
+  } catch (err: any) {
     console.error('[success] Failed to fetch license:', err)
+    console.error('[success] Error stack:', err?.stack)
     return null
   }
 }
@@ -203,11 +220,34 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
               </div>
             </>
           ) : (
-            <div className="mb-6 p-4 rounded-xl bg-[#0a0e1a] border border-white/10">
-              <p className="text-sm text-slate-400">
-                Your license key is being generated. Please check your email or refresh this page in
-                a moment.
-              </p>
+            <div className="mb-6 p-4 rounded-xl bg-[#0a0e1a] border border-yellow-500/20">
+              <div className="flex items-start gap-3 mb-3">
+                <svg className="w-5 h-5 text-yellow-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div className="flex-1">
+                  <p className="text-sm text-slate-300 mb-2">
+                    Your license key is being generated. This usually takes 10-30 seconds.
+                  </p>
+                  <p className="text-xs text-slate-400 mb-3">
+                    The webhook is processing your payment. Please check your email inbox (and spam folder) or refresh this page in a moment.
+                  </p>
+                  <div className="space-y-2 text-xs text-slate-500">
+                    <p>• Check your email: <strong className="text-slate-400">{email}</strong></p>
+                    <p>• The raw license key will be sent via email</p>
+                    <p>• Refresh this page in 30 seconds to see your license hash</p>
+                    <p className="pt-2 border-t border-white/5">
+                      <a 
+                        href={`/api/debug-license?email=${encodeURIComponent(email)}`} 
+                        target="_blank"
+                        className="text-blue-400 hover:text-blue-300 transition underline"
+                      >
+                        Check license status →
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
