@@ -73,6 +73,9 @@ export default function Page() {
           <section className="text-center space-y-8 pt-16 sm:pt-20">
             <div className="space-y-6">
               <div className="px-4 pb-6 pt-4 overflow-visible">
+                <div className="inline-block mb-4 px-4 py-1.5 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-sm font-semibold">
+                  🚀 Currently in Alpha
+                </div>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent leading-[1.3] pb-6">
                   Stop Clicking, Start Commanding
                 </h1>
@@ -96,7 +99,7 @@ export default function Page() {
                   disabled={isLoading}
                   className="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-bold text-lg hover:opacity-90 transition disabled:opacity-50 shadow-lg shadow-blue-500/20"
                 >
-                  {isLoading ? 'Processing...' : 'Purchase License Key — $15/month'}
+                  {isLoading ? 'Processing...' : 'Purchase License Key — $4.99/month (Alpha Pricing)'}
                 </button>
               </div>
               <p className="text-xs text-slate-500">Download is free • License key required to activate • Windows only</p>
@@ -245,15 +248,29 @@ export default function Page() {
             <p className="text-lg text-slate-300 text-center max-w-2xl mx-auto">
               The app is free to download. Purchase a license key to activate and unlock all features.
             </p>
+            <p className="text-sm text-orange-400 text-center max-w-2xl mx-auto font-medium">
+              🚀 Currently in Alpha — Early supporters get lifetime discounted pricing
+            </p>
             
             <div className="max-w-md mx-auto">
               <div className="rounded-2xl border border-white/5 bg-[#161b22] p-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full -mr-16 -mt-16"></div>
                 <div className="relative">
-                  <div className="text-5xl font-black mb-2 text-slate-100 leading-[1.3] pb-4">
-                    $15<span className="text-xl font-semibold text-slate-400">/month</span>
+                  <div className="mb-3">
+                    <div className="flex items-center justify-center gap-3 mb-2">
+                      <span className="text-2xl text-slate-500 line-through">$12.99</span>
+                      <div className="text-5xl font-black text-slate-100 leading-[1.3]">
+                        $4.99<span className="text-xl font-semibold text-slate-400">/month</span>
+                      </div>
+                    </div>
+                    <div className="inline-block px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-xs font-semibold">
+                      Alpha Pricing
+                    </div>
                   </div>
-                  <p className="text-sm text-slate-400 mb-6">License key activates full access. No hidden fees.</p>
+                  <p className="text-sm text-slate-400 mb-2">License key activates full access. No hidden fees.</p>
+                  <p className="text-xs text-emerald-400 mb-6 font-medium">
+                    ✓ Alpha subscribers keep this discounted price forever, even when pricing increases
+                  </p>
                   
                   <ul className="space-y-3 mb-8 text-sm text-slate-300">
                     <li className="flex items-start gap-3">
@@ -302,7 +319,7 @@ export default function Page() {
             <details className="rounded-xl border border-white/5 bg-[#161b22] p-5">
               <summary className="font-semibold cursor-pointer text-slate-200 text-lg">Is the download really free? Do I need to purchase anything?</summary>
               <p className="mt-3 text-sm text-slate-400 leading-relaxed">
-                Yes, the download is completely free for everyone. Anyone can download and install Absolute Assistant at no cost. However, to activate the app and use its features, you'll need to purchase a license key. The license key is $15/month and unlocks full functionality.
+                Yes, the download is completely free for everyone. Anyone can download and install Absolute Assistant at no cost. However, to activate the app and use its features, you'll need to purchase a license key. During our alpha phase, the license key is $4.99/month (regular price will be $12.99/month). Alpha subscribers will keep their discounted $4.99/month price forever, even when we increase pricing for new customers.
               </p>
             </details>
             
